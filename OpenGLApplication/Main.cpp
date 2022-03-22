@@ -1,49 +1,88 @@
-//These includes are specific to the way we’ve set up GLFW and GLAD.
-#define GLFW_INCLUDE_NONE
+#include "Graphics.h"
 
-#include "glfw3.h"
-#include "glad.h"
+#include <math.h>
+#include "Utilities.h"
+#include "ShaderProgram.h"
+
+#include <iostream>
+
 #include "glm.hpp"
 
-using namespace glm;
+#include "ext/matrix_transform.hpp"
+#include "ext/matrix_clip_space.hpp"
 
-int main(void)
+
+
+int main()
 {
-    GLFWwindow* window;
+	GLFWwindow* window;	//The pointer to the GLFW window that gives us a place to draw.
 
-    //Initialise GLFW, make sure it works. Put an error message here if you like.
-    if (!glfwInit())
-        return -1;
 
-    //Set resolution here, and give your window a different title.
-    window = glfwCreateWindow(1280, 720, "Don't just copy this!", nullptr, nullptr);
-    if (!window)
-    {
-        glfwTerminate(); //Again, you can put a real error message here.
-        return -1;
-    }
+	if (!glfwInit())
+		return -1;	//glfw failed to initialise.
 
-    //This tells GLFW that the window we created is the one we should render to.
-    glfwMakeContextCurrent(window);
+	//Can choose resolution here.
+	window = glfwCreateWindow(1280, 720, "GPU Graphics", nullptr, nullptr);
 
-    //Tell GLAD to load all its OpenGL functions.
-    if (!gladLoadGL())
-        return -1;
+	if (!window)
+	{
+		//If the window failed to create for some reason, abandon ship.
+		glfwTerminate();
+		return -1;
+	}
 
-    //The main ‘game’ loop.
-    while (!glfwWindowShouldClose(window))
-    {
-        //Clear the screen – eventually do rendering code here.
-        glClear(GL_COLOR_BUFFER_BIT);
+	//We have to tell glfw to use the OpenGL context from the window.
+	//This stuff can be relevant if you have multiple windows - you're
+	//telling OpenGL which one to apply render commands to.
+	//But if we only have one window we just do this once at the start.
+	glfwMakeContextCurrent(window);
 
-        //Swapping the buffers – this means this frame is over.
-        glfwSwapBuffers(window);
-        //Tell GLFW to check if anything is going on with input, etc.
-        glfwPollEvents();
-                
-    }
+	//This is where GLAD gets set up. After this point we can use openGL functions.
+	if (!gladLoadGL())
+		return -1;
 
-    //If we get to this point, the window has closed, so clean up GLFW and exit.
-    glfwTerminate();
-    return 0;
+	ShaderProgram theShader("SimpleShader.vsd", "SimpleShader.fsd");
+
+
+	GLuint triangleID;
+	glGenBuffers(1, &triangleID);
+
+	float aBunchOfFloats[] = {	0.0f, 0.0f, 
+								1.0f, 0.0f,
+							    0.0f, 1.0f };
+
+	glBindBuffer(GL_ARRAY_BUFFER, triangleID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6, aBunchOfFloats, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glEnableVertexAttribArray(0);
+
+
+	while (!glfwWindowShouldClose(window))
+	{
+	
+
+		//Your game goes here.
+
+		glBindBuffer(GL_ARRAY_BUFFER, triangleID);
+
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+		theShader.UseShader();
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+
+		glfwSwapBuffers(window);
+
+		
+
+
+
+		glfwPollEvents();
+	}
+
+
+	glfwTerminate();
+	return 0;
 }
