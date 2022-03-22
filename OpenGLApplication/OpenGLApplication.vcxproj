@@ -151,6 +151,7 @@
     <ClCompile Include="OBJMesh.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Shape2d.cpp" />
+    <ClCompile Include="Shape3d.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,13 +162,14 @@
     <ClInclude Include="OBJMesh.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Shape2d.h" />
+    <ClInclude Include="Shape3d.h" />
     <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Working\RedShader.fsd" />
+    <None Include="..\Working\3dFragmentShader.fsd" />
+    <None Include="..\Working\3dVertexShader.vsd" />
     <None Include="..\Working\SimpleShader.fsd" />
-    <None Include="..\Working\SimpleShader.vsd" />
     <None Include="..\Working\SquareShader.vsd" />
     <None Include="..\Working\TriangleShader.vsd" />
   </ItemGroup>

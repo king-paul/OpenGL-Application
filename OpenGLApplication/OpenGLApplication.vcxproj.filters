@@ -16,6 +16,12 @@
     <Filter Include="OpenGL">
       <UniqueIdentifier>{b60a46d5-67ab-4be6-9158-6e69357bbef9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Shapes">
+      <UniqueIdentifier>{f1620bd9-a1a1-4796-8af7-1ba2777fc3f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shapes">
+      <UniqueIdentifier>{a87764d7-30d0-433c-bde5-b46f6f89dd58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -36,8 +42,11 @@
     <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shape3d.cpp">
+      <Filter>Source Files\Shapes</Filter>
+    </ClCompile>
     <ClCompile Include="Shape2d.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,23 +75,26 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shape2d.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape3d.h">
+      <Filter>Header Files\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Working\RedShader.fsd">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\Working\SimpleShader.fsd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Working\SimpleShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\Working\SquareShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\Working\TriangleShader.vsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\3dFragmentShader.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\3dVertexShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

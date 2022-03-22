@@ -14,9 +14,10 @@
 #include "ext/matrix_clip_space.hpp"
 
 #include <glfw3.h>
+#include <vector>
 
 #include "Shape2d.h"
-#include <vector>
+#include "Shape3d.h"
 
 class Application
 {
@@ -36,4 +37,6 @@ private:
 	GLFWwindow* window;	//The pointer to the GLFW window that gives us a place to draw.
 
 	std::vector<Shape2d*> shapes;
+	std::vector<Shape3d*> shapes3d;
+
 };

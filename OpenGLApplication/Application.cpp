@@ -5,18 +5,22 @@ Application::Application()
 	if (Startup())
 	{
 		// create triangles
-		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 1.0f }, vec4(0.5, 0, 0, 1)));
-		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0, 0, 1)));
-		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, 1.0f }, vec4(0.5, 0.5, 0.5, 1)));
-		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0.5, 0.5, 1)));
-		shapes.push_back(new Rectangle({ 0,0 }, 1, 1, vec4(1.0, 0, 0, 1)));
+		//shapes.push_back(new Triangle({0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, vec4(0.5, 0, 0, 1)));
+		//shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0, 0, 1)));
+		//shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, 1.0f }, vec4(0.5, 0.5, 0.5, 1)));
+		//shapes.push_back(new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0.5, 0.5, 1)));
+		//shapes.push_back(new Rectangle({ 0,0 }, 1, 1, vec4(1.0, 0, 0, 1)));
 
 		// apply rotation
-		shapes[0]->SetRotateMotion(0.1, false);
-		shapes[1]->SetRotateMotion(0.1, false);
-		shapes[2]->SetRotateMotion(0.1, false);
-		shapes[3]->SetRotateMotion(0.1, false);
-		shapes[4]->SetRotateMotion(0.1, true);
+		//shapes[0]->SetRotateMotion(0.1, false);
+		//shapes[1]->SetRotateMotion(0.1, false);
+		//shapes[2]->SetRotateMotion(0.1, false);
+		//shapes[3]->SetRotateMotion(0.1, false);
+		//shapes[4]->SetRotateMotion(0.1, true);
+
+		//std::vector<vec3> colours = { {1, 0, 0} };
+		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
+		shapes3d.push_back(new Cube());
 	}
 }
 
@@ -25,6 +29,11 @@ Application::~Application()
 	glfwTerminate();
 
 	for (Shape2d* shape : shapes)
+	{
+		delete shape;
+	}
+
+	for (Shape3d* shape : shapes3d)
 	{
 		delete shape;
 	}
@@ -55,6 +64,8 @@ bool Application::Startup()
 	if (!gladLoadGL())
 		return -1;
 
+	glEnable(GL_DEPTH_TEST);
+
 	return true;
 }
 
@@ -73,6 +84,10 @@ bool Application::Update()
 	{
 		shape->Update(deltaTime);
 	}
+	for (Shape3d* shape : shapes3d)
+	{
+		shape->Update(deltaTime);
+	}
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
@@ -85,6 +100,10 @@ void Application::Draw()
 {
 	// draw shapes
 	for (Shape2d* shape : shapes)
+	{
+		shape->Draw();
+	}
+	for (Shape3d* shape : shapes3d)
 	{
 		shape->Draw();
 	}
