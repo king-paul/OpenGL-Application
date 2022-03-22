@@ -4,7 +4,7 @@
 layout (location = 0) in vec2 Position;
 
 uniform float aspectRatio;
-uniform float rotation = 3.14159 * 0.25;
+uniform float rotation;
 
 void main()
 {	

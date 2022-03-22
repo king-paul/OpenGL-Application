@@ -18,7 +18,9 @@ protected:
     bool clockwiseRotation;
 
 public:
-	void Init(GLsizeiptr size, const void* data, ShaderProgram* shader);
+    Shape2d(vec4 colour, ShaderProgram* shader);
+    ~Shape2d() { delete shader; }
+    void SetData(GLsizeiptr size, const void* data);
 	virtual void Draw();
     virtual void Update(float deltaTime);
 
@@ -31,13 +33,13 @@ public:
 class Triangle : public Shape2d
 {
 public:
-    Triangle(vec2 p1, vec2 p2, vec2 p3, ShaderProgram* shader);
+    Triangle(vec2 p1, vec2 p2, vec2 p3, vec4 colour);
     void Draw() override;
 };
 
 class Rectangle : public Shape2d
 {
 public:
-    Rectangle(vec2 center, float width, float height, ShaderProgram* shader);
+    Rectangle(vec2 center, float width, float height, vec4 colour);
     void Draw() override;
 };

@@ -2,42 +2,32 @@
 
 Application::Application()
 {
-	bool sucess = Startup();
+	if (Startup())
+	{
+		// create triangles
+		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 1.0f }, vec4(0.5, 0, 0, 1)));
+		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0, 0, 1)));
+		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, 1.0f }, vec4(0.5, 0.5, 0.5, 1)));
+		shapes.push_back(new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0.5, 0.5, 1)));
+		shapes.push_back(new Rectangle({ 0,0 }, 1, 1, vec4(1.0, 0, 0, 1)));
 
-	if (!sucess)
-		false;
-
-	// create shaders
-	shader1 = ShaderProgram("TriangleShader.vsd", "SimpleShader.fsd");
-	shader2 = ShaderProgram("TriangleShader.vsd", "RedShader.fsd");
-	shader3 = ShaderProgram("SquareShader.vsd", "RedShader.fsd");
-
-	// create triangles
-	triangle1 = new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 1.0f }, &shader1);
-	triangle2 = new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, -1.0f }, &shader1);
-	triangle3 = new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, 1.0f }, &shader2);
-	triangle4 = new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, -1.0f }, &shader2);
-
-	// create square
-	square = new Rectangle({ 0,0 }, 1, 1, &shader1);
-
-	// apply rotation
-	square->SetRotateMotion(0.1, true);
-	//triangle1->SetRotateMotion(0.1, true);
-	//triangle2->SetRotateMotion(0.1, true);
-	//triangle3->SetRotateMotion(0.1, false);
-	//triangle4->SetRotateMotion(0.1, false);
+		// apply rotation
+		shapes[0]->SetRotateMotion(0.1, false);
+		shapes[1]->SetRotateMotion(0.1, false);
+		shapes[2]->SetRotateMotion(0.1, false);
+		shapes[3]->SetRotateMotion(0.1, false);
+		shapes[4]->SetRotateMotion(0.1, true);
+	}
 }
 
 Application::~Application()
 {
 	glfwTerminate();
 
-	delete triangle1;
-	delete triangle2;
-	delete triangle3;
-	delete triangle4;
-	delete square;
+	for (Shape2d* shape : shapes)
+	{
+		delete shape;
+	}
 }
 
 bool Application::Startup()
@@ -78,9 +68,11 @@ bool Application::Update()
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 
-	square->Update(deltaTime);
-	//triangle1->Update(deltaTime);
-	//triangle3->Update(deltaTime);
+	// update shapes
+	for (Shape2d* shape : shapes)
+	{
+		shape->Update(deltaTime);
+	}
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
@@ -91,9 +83,10 @@ bool Application::Update()
 
 void Application::Draw()
 {
-	triangle1->Draw();
-	triangle2->Draw();
-	triangle3->Draw();
-	triangle4->Draw();
-	square->Draw();
+	// draw shapes
+	for (Shape2d* shape : shapes)
+	{
+		shape->Draw();
+	}
+
 }

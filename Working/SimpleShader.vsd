@@ -2,15 +2,13 @@
 
 //Attributes that we expect from the vertex buffer
 layout (location = 0) in vec2 Position;
+layout (location = 1) in vec3 Colour;
 
+//out vec3 colour;
 
 void main()
 {
-	
-	vec4 something;
-	
-	vec3 somethingElse = something.www;
-
+	colour = Colour;
 
 	gl_Position = vec4(Position, 0, 1);
 }

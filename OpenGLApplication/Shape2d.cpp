@@ -1,10 +1,17 @@
 #include "Shape2d.h"
 
-void Shape2d::Init(GLsizeiptr size, const void* data, ShaderProgram* shader) 
+Shape2d::Shape2d(vec4 colour, ShaderProgram* shader)
 {
 	this->shader = shader;
 	shader->SetUniform("aspectRatio", 16.0f / 9.0);
+	shader->SetUniform("red", colour.r);
+	shader->SetUniform("green", colour.g);
+	shader->SetUniform("blue", colour.b);
+	shader->SetUniform("alpha", colour.a);
+}
 
+void Shape2d::SetData(GLsizeiptr size, const void* data)
+{
 	glGenBuffers(1, &id);
 
 	glBindBuffer(GL_ARRAY_BUFFER, id);
@@ -42,10 +49,11 @@ void Shape2d::SetRotateMotion(float speed, bool clockwise)
 	clockwiseRotation = clockwise;
 }
 
-Triangle::Triangle(vec2 p1, vec2 p2, vec2 p3, ShaderProgram* shader)
+Triangle::Triangle(vec2 p1, vec2 p2, vec2 p3, vec4 colour) 
+	: Shape2d(colour, new ShaderProgram("TriangleShader.vsd", "SimpleShader.fsd"))
 {
 	float data[] = { p1.x, p1.y, p2.x, p2.y, p3.x, p3.y };
-	Init(6, data, shader);
+	SetData(6, data);
 }
 
 void Triangle::Draw()
@@ -54,7 +62,8 @@ void Triangle::Draw()
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-Rectangle::Rectangle(vec2 center, float width, float height, ShaderProgram* shader)
+Rectangle::Rectangle(vec2 center, float width, float height, vec4 colour)
+	: Shape2d(colour, new ShaderProgram("SquareShader.vsd", "SimpleShader.fsd"))
 {
 	vec2 p1 = { center.x - width / 2, center.y + height / 2 };
 	vec2 p2 = { center.x + width / 2, center.y + height / 2 };
@@ -62,7 +71,7 @@ Rectangle::Rectangle(vec2 center, float width, float height, ShaderProgram* shad
 	vec2 p4 = { center.x - width / 2, center.y - height / 2 };
 
 	float data[] = { p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y };
-	Init(8, data, shader);
+	SetData(8, data);
 }
 
 void Rectangle::Draw()
