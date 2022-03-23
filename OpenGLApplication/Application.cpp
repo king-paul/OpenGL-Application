@@ -18,9 +18,10 @@ Application::Application()
 		//shapes[3]->SetRotateMotion(0.1, false);
 		//shapes[4]->SetRotateMotion(0.1, true);
 
-		//std::vector<vec3> colours = { {1, 0, 0} };
-		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
-		shapes3d.push_back(new Cube());
+		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
+		shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
+
+		shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 	}
 }
 

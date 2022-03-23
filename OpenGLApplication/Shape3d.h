@@ -26,6 +26,7 @@ public:
 	void SetData(const void* data);
 	virtual void Update(float deltaTime);
 	virtual void Draw();
+	void SetRotateMotion(vec3 axis, float speed);
 
 protected:
 	GLuint triangleID;
@@ -35,6 +36,10 @@ protected:
 
 	// matrices
 	mat4 rotation, view, projection;
+
+	// rotation
+	vec3 rotateAxis;
+	float rotateSpeed;
 };
 
 class Cube : public Shape3d
