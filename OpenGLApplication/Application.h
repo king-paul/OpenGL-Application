@@ -18,6 +18,12 @@
 
 #include "Shape2d.h"
 #include "Shape3d.h"
+#include "Mesh.h"
+
+struct Light { 
+	glm::vec3 direction; 
+	glm::vec3 colour;
+};
 
 class Application
 {
@@ -36,7 +42,12 @@ private:
 
 	GLFWwindow* window;	//The pointer to the GLFW window that gives us a place to draw.
 
+	// graphic objects
 	std::vector<Shape2d*> shapes;
 	std::vector<Shape3d*> shapes3d;
+	Mesh* plane;
+	ShaderProgram* meshShader;
 
+	// Lights
+	Light light;
 };

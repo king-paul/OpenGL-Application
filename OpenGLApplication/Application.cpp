@@ -20,6 +20,11 @@ Application::Application()
 
 		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
 		shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
+		
+		meshShader = new ShaderProgram("3dVertexShader.vsd", "3dFragmentShader.fsd");
+		plane = new Mesh(meshShader);
+		plane->InitialiseQuad();
+		//shapes3d.push_back(plane);
 
 		shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 	}
@@ -38,6 +43,8 @@ Application::~Application()
 	{
 		delete shape;
 	}
+
+	delete plane;
 }
 
 bool Application::Startup()
@@ -109,4 +116,5 @@ void Application::Draw()
 		shape->Draw();
 	}
 
+	//plane->Draw();
 }
