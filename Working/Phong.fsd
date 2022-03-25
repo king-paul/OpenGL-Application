@@ -1,0 +1,31 @@
+#version410
+uniform vec3 ambientMaterial = vec3 (1,0,0); // red ambient material colour
+uniform vec3 diffuseMaterial = vec3 (1,0,0); // red diffuse material colour
+uniform vec3 specularMaterial = vec3 (1,0,0); // red specular material colour
+
+uniform vec3 ambientLight = vec3 (0.25f, 0.25f, 0.25f);
+uniform vec3 diffiuseLight = vec3 (1,1,1);
+uniform vec3 specularLight = vec3 (1,1,1);
+
+uniform float iSpecPower = 32.0f; // specular power
+
+in vec3 surfaceNormal; // normalised surface normal from mesh
+in vec3 positionFromMesh; // world space surface position from mesh
+
+uniform vec3 camPos ; // world space camera position
+uniform vec3 lightDirection; // normalised light direction from light
+
+void main(){
+	vec3 Ambient = ambientMaterial * ambientLight ; // ambient light
+	
+	float NdL = max (0.0f, dot (surfaceNormal, L)); // Lambert term
+	vec3 Diffuse = diffuseMaterial * diffiuseLight * NdL ; // diffuse light for one light
+	
+	vec3R = reflect (L, surfaceNormal); // reflected light vector
+	vec3 E = normalize (camPos - positionFromMesh); // surface to eye vector
+	
+	float specTerm = pow (min( 0.0f, dot (R, E)), iSpecPower); // Specular term
+	vec3 Specular = specularMaterial * specularLight * specTerm; // specular light for one light
+	
+	gl_FragColor = vec4 (Ambient + Diffuse + Specular, 1);
+}
