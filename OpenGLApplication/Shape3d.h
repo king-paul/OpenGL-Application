@@ -9,6 +9,7 @@
 
 #include <ext/matrix_transform.hpp>
 #include <ext/matrix_clip_space.hpp>
+#include "Texture.h"
 
 using namespace glm;
 
@@ -22,6 +23,7 @@ class Shape3d
 {
 public:
 	Shape3d(ShaderProgram*);
+	Shape3d(ShaderProgram*, Texture*);
 	~Shape3d();
 	void SetData(const void* data);
 	virtual void Update(float deltaTime);
@@ -36,15 +38,20 @@ protected:
 
 	// matrices
 	mat4 rotation, view, projection;
+	mat4 transform;
 
 	// rotation
 	vec3 rotateAxis;
 	float rotateSpeed;
+
+	// textures
+	Texture* texture;
 };
 
 class Cube : public Shape3d
 {
 public:
-	Cube();
+	Cube(Texture* texture);
 	Cube(vec3 position, std::vector<vec3> colours);
+	Cube(vec3 position, Texture* texture);
 };

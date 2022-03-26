@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Shapes">
       <UniqueIdentifier>{a87764d7-30d0-433c-bde5-b46f6f89dd58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\OBJ">
+      <UniqueIdentifier>{e02cccc7-b31f-4f7e-8168-bc35bf047db8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -57,6 +60,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="khrplatform.h">
@@ -68,13 +74,7 @@
     <ClInclude Include="Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OBJMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tiny_obj_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
@@ -95,9 +95,21 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJMesh.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Working\SimpleShader.fsd">
+    <None Include="..\Working\SimpleShader2d.fsd">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\Working\SquareShader.vsd">
@@ -106,11 +118,19 @@
     <None Include="..\Working\TriangleShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Working\3dFragmentShader.fsd">
+    <None Include="..\Working\TextureShader.fsd">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\Working\3dVertexShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Working\ColourShader.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Working\face.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

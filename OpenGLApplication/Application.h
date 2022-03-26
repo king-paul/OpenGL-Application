@@ -19,6 +19,7 @@
 #include "Shape2d.h"
 #include "Shape3d.h"
 #include "Mesh.h"
+#include "Camera.h"
 
 struct Light { 
 	glm::vec3 direction; 
@@ -47,6 +48,12 @@ private:
 	std::vector<Shape3d*> shapes3d;
 	Mesh* plane;
 	ShaderProgram* meshShader;
+
+	// cameras
+	Camera mainCamera;
+
+	// textures
+	Texture* faceTexture;
 
 	// Lights
 	Light light;

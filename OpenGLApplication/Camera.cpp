@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include <ext/matrix_clip_space.hpp>
 
 mat4 Camera::GetViewMatrix()
 {
@@ -11,4 +12,9 @@ mat4 Camera::GetViewMatrix()
 mat4 Camera::GetProjectionMatrix(float w, float h)
 {
 	return glm::perspective(glm::pi<float>() * 0.25f, w / h, 0.1f, 1000.f);
+}
+
+void Camera:: Update()
+{
+
 }

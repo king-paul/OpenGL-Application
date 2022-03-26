@@ -4,6 +4,9 @@ Application::Application()
 {
 	if (Startup())
 	{
+		// load textures
+		faceTexture = new Texture("face.png");
+
 		// create triangles
 		//shapes.push_back(new Triangle({0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, vec4(0.5, 0, 0, 1)));
 		//shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0, 0, 1)));
@@ -19,14 +22,19 @@ Application::Application()
 		//shapes[4]->SetRotateMotion(0.1, true);
 
 		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
-		shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
+
+		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
+		shapes3d.push_back(new Cube(faceTexture));
+		//shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture));
 		
-		meshShader = new ShaderProgram("3dVertexShader.vsd", "3dFragmentShader.fsd");
+		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
 		plane = new Mesh(meshShader);
 		plane->InitialiseQuad();
 		//shapes3d.push_back(plane);
 
 		shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+		
+		//faceTexture->PrintAsciiImage();
 	}
 }
 
@@ -45,6 +53,7 @@ Application::~Application()
 	}
 
 	delete plane;
+	delete faceTexture;
 }
 
 bool Application::Startup()
@@ -106,6 +115,8 @@ bool Application::Update()
 
 void Application::Draw()
 {
+	glClearColor(0.25f, 0.25f, 0.25f, 1);	
+
 	// draw shapes
 	for (Shape2d* shape : shapes)
 	{

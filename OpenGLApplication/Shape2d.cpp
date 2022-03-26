@@ -50,7 +50,7 @@ void Shape2d::SetRotateMotion(float speed, bool clockwise)
 }
 
 Triangle::Triangle(vec2 p1, vec2 p2, vec2 p3, vec4 colour) 
-	: Shape2d(colour, new ShaderProgram("TriangleShader.vsd", "SimpleShader.fsd"))
+	: Shape2d(colour, new ShaderProgram("TriangleShader.vsd", "SimpleShader2d.fsd"))
 {
 	float data[] = { p1.x, p1.y, p2.x, p2.y, p3.x, p3.y };
 	SetData(6, data);
@@ -63,7 +63,7 @@ void Triangle::Draw()
 }
 
 Rectangle::Rectangle(vec2 center, float width, float height, vec4 colour)
-	: Shape2d(colour, new ShaderProgram("SquareShader.vsd", "SimpleShader.fsd"))
+	: Shape2d(colour, new ShaderProgram("SquareShader.vsd", "SimpleShader2d.fsd"))
 {
 	vec2 p1 = { center.x - width / 2, center.y + height / 2 };
 	vec2 p2 = { center.x + width / 2, center.y + height / 2 };
