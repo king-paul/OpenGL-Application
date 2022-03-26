@@ -6,8 +6,9 @@ in vec3 _colour;
 in vec2 _uvs;
 
 uniform sampler2D baseTexture;
+uniform sampler2D blendedTexture;
 
 void main()
 {
-	FragColour = texture(baseTexture, _uvs);
+	FragColour = texture(baseTexture, _uvs) + texture(blendedTexture, _uvs) * 0.5;
 }

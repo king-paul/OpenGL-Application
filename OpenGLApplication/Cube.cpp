@@ -49,9 +49,61 @@ Cube::Cube(Texture* texture) : Shape3d(new ShaderProgram("3dVertexShader.vsd", "
 
 	};
 
-	SetData(cubeData);
+	SetData(216, cubeData);
 }
 
+Cube::Cube(Texture* mainTexture, Texture* blendedTexture) :
+	Shape3d(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), mainTexture, blendedTexture)
+{
+	float cubeData[] = {
+
+		// vertices //colour  // uv texture mapping
+		0, 0, 1,   1, 0, 0,	  0, 0,
+		0, 1, 1,   1, 0, 0,	  0, 1,
+		1, 0, 1,   1, 0, 0,	  1, 0,
+		0, 1, 1,   1, 0, 0,	  0, 1,
+		1, 1, 1,   1, 0, 0,	  1, 1,
+		1, 0, 1,   1, 0, 0,	  1, 0,
+
+		0, 0, 0,   0, 0, 1,	  0, 0,
+		0, 1, 0,   0, 0, 1,	  0, 1,
+		1, 0, 0,   0, 0, 1,	  1, 0,
+		0, 1, 0,   0, 0, 1,	  0, 1,
+		1, 1, 0,   0, 0, 1,	  1, 1,
+		1, 0, 0,   0, 0, 1,	  1, 0,
+
+		0, 0, 0,   0, 1, 0,   0, 0,
+		0, 0, 1,   0, 1, 0,	  0, 1,
+		0, 1, 0,   0, 1, 0,	  1, 0,
+		0, 0, 1,   0, 1, 0,	  0, 1,
+		0, 1, 1,   0, 1, 0,	  1, 1,
+		0, 1, 0,   0, 1, 0,	  1, 0,
+
+		1, 0, 0,   0, 1, 1,   0, 0,
+		1, 0, 1,   0, 1, 1,	  0, 1,
+		1, 1, 0,   0, 1, 1,	  1, 0,
+		1, 0, 1,   0, 1, 1,	  0, 1,
+		1, 1, 1,   0, 1, 1,	  1, 1,
+		1, 1, 0,   0, 1, 1,	  1, 0,
+
+		0, 0, 0,   1, 1, 0,   0, 0,
+		0, 0, 1,   1, 1, 0,	  0, 1,
+		1, 0, 0,   1, 1, 0,	  1, 0,
+		0, 0, 1,   1, 1, 0,	  0, 1,
+		1, 0, 1,   1, 1, 0,	  1, 1,
+		1, 0, 0,   1, 1, 0,	  1, 0,
+
+		0, 1, 0,   1, 0, 1,   0, 0,
+		0, 1, 1,   1, 0, 1,	  0, 1,
+		1, 1, 0,   1, 0, 1,	  1, 0,
+		0, 1, 1,   1, 0, 1,	  0, 1,
+		1, 1, 1,   1, 0, 1,	  1, 1,
+		1, 1, 0,   1, 0, 1,	  1, 0,
+
+	};
+
+	SetData(216, cubeData);
+}
 
 Cube::Cube(vec3 position, std::vector<vec3> colours) :
 	Shape3d(new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"))
@@ -83,7 +135,7 @@ Cube::Cube(vec3 position, std::vector<vec3> colours) :
 		indicies[3], colours[5], indicies[7], colours[5], indicies[6], colours[5],
 	};
 
-	SetData(cubeData);
+	SetData(216, cubeData);
 }
 
 Cube::Cube(vec3 position, Texture* texture) : Shape3d(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), texture)
@@ -109,6 +161,7 @@ Cube::Cube(vec3 position, Texture* texture) : Shape3d(new ShaderProgram("3dVerte
 		indicies[2], uvs[3], indicies[6], uvs[4], indicies[4], uvs[5],
 		indicies[0], uvs[0], indicies[1], uvs[1], indicies[2], uvs[2],
 		indicies[1], uvs[3], indicies[3], uvs[4], indicies[2], uvs[5],
+
 		indicies[4], uvs[0], indicies[5], uvs[1], indicies[6], uvs[2],
 		indicies[5], uvs[3], indicies[7], uvs[4], indicies[6], uvs[5],
 		indicies[0], uvs[0], indicies[1], uvs[1], indicies[4], uvs[2],
@@ -117,5 +170,26 @@ Cube::Cube(vec3 position, Texture* texture) : Shape3d(new ShaderProgram("3dVerte
 		indicies[3], uvs[3], indicies[7], uvs[4], indicies[6], uvs[5],
 	};
 
-	SetData(cubeData);
+	/*
+	// face 1
+	polygons.push_back({ {indicies[1], uvs[0]}, {indicies[3], uvs[1]}, {indicies[5], uvs[2]} });
+	polygons.push_back({ {indicies[3], uvs[3]}, {indicies[7], uvs[4]}, {indicies[5], uvs[5]} });
+	// face 2
+	polygons.push_back({ {indicies[0], uvs[0]}, {indicies[2], uvs[1]}, {indicies[4], uvs[2]} });
+	polygons.push_back({ {indicies[2], uvs[3]}, {indicies[6], uvs[4]}, {indicies[4], uvs[5]} });
+	// face 3
+	polygons.push_back({ {indicies[0], uvs[0]}, {indicies[1], uvs[1]}, {indicies[2], uvs[2]} });
+	polygons.push_back({ {indicies[1], uvs[3]}, {indicies[3], uvs[4]}, {indicies[2], uvs[5]} });
+	// face 4
+	polygons.push_back({ {indicies[4], uvs[0]}, {indicies[5], uvs[1]}, {indicies[6], uvs[2]} });	
+	polygons.push_back({ {indicies[5], uvs[3]}, {indicies[7], uvs[4]}, {indicies[6], uvs[5]} });
+	// face 5
+	polygons.push_back({ {indicies[0], uvs[0]}, {indicies[1], uvs[1]}, {indicies[4], uvs[2]} });	
+	polygons.push_back({ {indicies[1], uvs[3]}, {indicies[5], uvs[4]}, {indicies[4], uvs[5]} });
+	// face 6
+	polygons.push_back({ {indicies[2], uvs[0]}, {indicies[3], uvs[1]}, {indicies[6], uvs[2]} });
+	polygons.push_back({ {indicies[3], uvs[3]}, {indicies[7], uvs[4]}, {indicies[6], uvs[5]} });
+	*/
+
+	SetData(228, cubeData);
 }

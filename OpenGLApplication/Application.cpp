@@ -5,7 +5,8 @@ Application::Application()
 	if (Startup())
 	{
 		// load textures
-		faceTexture = new Texture("face.png");
+		faceTexture1 = new Texture("face.png");
+		faceTexture2 = new Texture("face_sad.png");
 
 		// create triangles
 		//shapes.push_back(new Triangle({0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, vec4(0.5, 0, 0, 1)));
@@ -24,7 +25,7 @@ Application::Application()
 		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
 
 		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
-		shapes3d.push_back(new Cube(faceTexture));
+		shapes3d.push_back(new Cube(faceTexture1, faceTexture2));
 		//shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture));
 		
 		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
@@ -53,7 +54,8 @@ Application::~Application()
 	}
 
 	delete plane;
-	delete faceTexture;
+	delete faceTexture1;
+	delete faceTexture2;
 }
 
 bool Application::Startup()

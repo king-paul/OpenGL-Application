@@ -92,13 +92,15 @@ Texture& Texture::operator=(Texture&& otherTexture)
 	return *this;
 }
 
-void Texture::Bind()
+void Texture::Bind(int textureUnit)
 {
+	glActiveTexture(GL_TEXTURE0 + textureUnit);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
-void Texture::Unbind()
+void Texture::Unbind(int textureUnit)
 {
+	glActiveTexture(GL_TEXTURE0 + textureUnit);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

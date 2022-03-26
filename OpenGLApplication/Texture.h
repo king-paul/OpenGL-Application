@@ -30,9 +30,9 @@ public:
 	Texture& operator=(Texture&& otherTexture);
 
 
-	void Bind();
+	void Bind(int textureUnit =0);
 
-	static void Unbind();
+	static void Unbind(int textureUnit = 0);
 
 	void PrintAsciiImage();
 };

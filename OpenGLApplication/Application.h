@@ -53,7 +53,8 @@ private:
 	Camera mainCamera;
 
 	// textures
-	Texture* faceTexture;
+	Texture* faceTexture1;
+	Texture* faceTexture2;
 
 	// Lights
 	Light light;

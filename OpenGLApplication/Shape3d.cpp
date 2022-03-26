@@ -17,7 +17,23 @@ Shape3d::Shape3d(ShaderProgram* shader, Texture* texture)
 
 	transform = glm::identity<mat4>();
 
-	this->texture = texture;
+	mainTexture = texture;
+}
+
+Shape3d::Shape3d(ShaderProgram* shader, Texture *diiffuse, Texture *normal, Texture *specular) :
+	shader(shader), diffuse(diffuse), normal(normal), specular(specular)
+{
+	position = vec3(0, 0, 0);
+	rotateAxis = vec3(0, 1, 0);
+	transform = glm::identity<mat4>();
+}
+
+Shape3d::Shape3d(ShaderProgram* shader, Texture* main, Texture* blend) :
+	shader(shader), mainTexture(main), blendedTexture(blend)
+{
+	position = vec3(0, 0, 0);
+	rotateAxis = vec3(0, 1, 0);
+	transform = glm::identity<mat4>();
 }
 
 Shape3d::~Shape3d()
@@ -25,13 +41,13 @@ Shape3d::~Shape3d()
 	delete shader;
 }
 
-void Shape3d::SetData(const void* data)
+void Shape3d::SetData(unsigned int bufferSize, const void* data)
 {
 	glGenBuffers(1, &triangleID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, triangleID);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 216, data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * bufferSize, data, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -39,10 +55,20 @@ void Shape3d::SetData(const void* data)
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
-	if (texture)
+	if (mainTexture)
 	{
 		glEnableVertexAttribArray(2);
-		texture->Bind();
+		mainTexture->Bind(0);
+
+		if (blendedTexture)
+			blendedTexture->Bind(1);		
+	}
+	else if (diffuse && normal && specular)
+	{
+		glEnableVertexAttribArray(2);
+		diffuse->Bind(0);
+		normal->Bind(1);
+		specular->Bind(2);
 	}
 }
 
@@ -55,14 +81,20 @@ void Shape3d::Update(float deltaTime)
 	// mat4 Perspective(float fovInRadians, float aspectRatio, float nearPlane, float farPlane);
 	projection = glm::perspective(3.14159f / 4, 1920.0f / 1080, 0.1f, 100.0f);
 
-	shader->SetUniform("mvp", projection * view * rotation);	
+	shader->SetUniform("mvp", projection * view * rotation);
+
+	if (mainTexture && blendedTexture)
+	{
+		shader->SetUniform("baseTexture", 0);
+		shader->SetUniform("blendedTexture", 1);
+	}
 }
 
 void Shape3d::Draw()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, triangleID);
 	
-	if (texture)
+	if (mainTexture)
 	{
 		// assigns attributes from vertex shader
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0); // Position

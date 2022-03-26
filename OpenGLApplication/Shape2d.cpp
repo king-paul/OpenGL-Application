@@ -3,7 +3,7 @@
 Shape2d::Shape2d(vec4 colour, ShaderProgram* shader)
 {
 	this->shader = shader;
-	shader->SetUniform("aspectRatio", 16.0f / 9.0);
+	shader->SetUniform("aspectRatio", 16.0f / 9.0f);
 	shader->SetUniform("red", colour.r);
 	shader->SetUniform("green", colour.g);
 	shader->SetUniform("blue", colour.b);
