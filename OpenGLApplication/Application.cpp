@@ -8,34 +8,28 @@ Application::Application()
 		faceTexture1 = new Texture("face.png");
 		faceTexture2 = new Texture("face_sad.png");
 
-		// create triangles
-		//shapes.push_back(new Triangle({0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, vec4(0.5, 0, 0, 1)));
-		//shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0, 0, 1)));
-		//shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, 1.0f }, vec4(0.5, 0.5, 0.5, 1)));
-		//shapes.push_back(new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0.5, 0.5, 1)));
-		//shapes.push_back(new Rectangle({ 0,0 }, 1, 1, vec4(1.0, 0, 0, 1)));
-
-		// apply rotation
-		//shapes[0]->SetRotateMotion(0.1, false);
-		//shapes[1]->SetRotateMotion(0.1, false);
-		//shapes[2]->SetRotateMotion(0.1, false);
-		//shapes[3]->SetRotateMotion(0.1, false);
-		//shapes[4]->SetRotateMotion(0.1, true);
-
 		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
 
+		//shapes3d.push_back(new Cube(colours));
 		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
 		//shapes3d.push_back(new Cube(faceTexture1, faceTexture2));
-		shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture1, faceTexture2));
+		//shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture1, faceTexture2));
 		
 		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
-		plane = new Mesh(meshShader);
-		plane->InitialiseQuad();
+		//plane = new Mesh(meshShader);
+		//plane->InitialiseQuad();
 		//shapes3d.push_back(plane);
 
-		shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+		//shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 		
 		//faceTexture->PrintAsciiImage();
+
+		shapes3d.push_back(new Plane());
+
+		int winWidth, winHeight;
+		glfwGetWindowSize(window, &winWidth, &winHeight);
+
+		mainCamera = new Camera(winWidth, winHeight);
 	}
 }
 
@@ -56,6 +50,7 @@ Application::~Application()
 	delete plane;
 	delete faceTexture1;
 	delete faceTexture2;
+	delete mainCamera;
 }
 
 bool Application::Startup()
@@ -108,6 +103,8 @@ bool Application::Update()
 		shape->Update(deltaTime);
 	}
 
+	//mainCamera->Update(deltaTime);
+
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -130,4 +127,21 @@ void Application::Draw()
 	}
 
 	//plane->Draw();
+}
+
+void Application::Create2dShapes()
+{
+	// create triangles
+	shapes.push_back(new Triangle({0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, vec4(0.5, 0, 0, 1)));
+	shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0, 0, 1)));
+	shapes.push_back(new Triangle({ 0.0f, 0.0f }, { -1.0f, 0.0f }, { 0.0f, 1.0f }, vec4(0.5, 0.5, 0.5, 1)));
+	shapes.push_back(new Triangle({ 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, -1.0f }, vec4(0.5, 0.5, 0.5, 1)));
+	shapes.push_back(new Rectangle({ 0,0 }, 1, 1, vec4(1.0, 0, 0, 1)));
+
+	// apply rotation
+	shapes[0]->SetRotateMotion(0.1, false);
+	shapes[1]->SetRotateMotion(0.1, false);
+	shapes[2]->SetRotateMotion(0.1, false);
+	shapes[3]->SetRotateMotion(0.1, false);
+	shapes[4]->SetRotateMotion(0.1, true);
 }

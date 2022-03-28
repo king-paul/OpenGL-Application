@@ -19,7 +19,7 @@ void Shape3d::SetData(unsigned int bufferSize, const void* data)
 
 	glBindBuffer(GL_ARRAY_BUFFER, triangleID);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * bufferSize, data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, bufferSize, data, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -76,17 +76,33 @@ void Shape3d::Draw()
 	else 
 	{
 		// assigns attributes from vertex shader
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0); // Position
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float))); // Colour
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0); // Position
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float))); // Colour
 	}
 
 	shader->UseShader();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // draws the shape
+	glDrawArrays(GL_TRIANGLES, 0, polygons.size() * 3); // draws the shape
 }
 
 void Shape3d::SetRotateMotion(vec3 axis, float speed)
 {
 	rotateAxis = axis;
 	rotateSpeed = speed;
+}
+
+// Translate, rotate and scale
+void Shape3d::SetPosition(float x, float y, float z)
+{
+	glm::translate(transform, vec3(x, y, z));
+}
+
+void Shape3d::SetRotation(vec3 axis, float angle)
+{
+	glm::rotate(transform, angle, axis);
+}
+
+void Shape3d::SetScale(float x, float y, float z)
+{
+	glm::scale(transform, vec3(x, y, z));
 }

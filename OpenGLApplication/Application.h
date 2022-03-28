@@ -36,6 +36,10 @@ public:
 	void Draw();
 	
 private:
+
+	// functions
+	void Create2dShapes();
+
 	// timers
 	float currentFrame = 0;
 	float deltaTime = 0;
@@ -50,7 +54,7 @@ private:
 	ShaderProgram* meshShader;
 
 	// cameras
-	Camera mainCamera;
+	Camera* mainCamera;
 
 	// textures
 	Texture* faceTexture1;

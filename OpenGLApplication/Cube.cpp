@@ -13,32 +13,34 @@ Cube::Cube(std::vector<vec3> colours) :
 		{ 1, 1, 0 }, // 6
 		{ 1, 1, 1 }  // 7
 	};
-
+	
 	// face 1
-	polygons.push_back({ Vertex(indicies[1], colours[0]), Vertex(indicies[3], colours[1]), Vertex(indicies[5], colours[2]) });
-	polygons.push_back({ Vertex(indicies[3], colours[3]), Vertex(indicies[7], colours[4]), Vertex(indicies[5], colours[5]) });
+	polygons.push_back({ Vertex(indicies[1], colours[0]), Vertex(indicies[3], colours[0]), Vertex(indicies[5], colours[0]) });
+	polygons.push_back({ Vertex(indicies[3], colours[0]), Vertex(indicies[7], colours[0]), Vertex(indicies[5], colours[0]) });
 	// face 2																	
-	polygons.push_back({ Vertex(indicies[0], colours[0]), Vertex(indicies[2], colours[1]), Vertex(indicies[4], colours[2]) });
-	polygons.push_back({ Vertex(indicies[2], colours[3]), Vertex(indicies[6], colours[4]), Vertex(indicies[4], colours[5]) });
+	polygons.push_back({ Vertex(indicies[0], colours[1]), Vertex(indicies[2], colours[1]), Vertex(indicies[4], colours[1]) });
+	polygons.push_back({ Vertex(indicies[2], colours[1]), Vertex(indicies[6], colours[1]), Vertex(indicies[4], colours[1]) });
 	// face 3
-	polygons.push_back({ Vertex(indicies[0], colours[0]), Vertex(indicies[1], colours[1]), Vertex(indicies[2], colours[2]) });
-	polygons.push_back({ Vertex(indicies[1], colours[3]), Vertex(indicies[3], colours[4]), Vertex(indicies[2], colours[5]) });
+	polygons.push_back({ Vertex(indicies[0], colours[2]), Vertex(indicies[1], colours[1]), Vertex(indicies[2], colours[2]) });
+	polygons.push_back({ Vertex(indicies[1], colours[2]), Vertex(indicies[3], colours[2]), Vertex(indicies[2], colours[2]) });
 	// face 4
-	polygons.push_back({ Vertex(indicies[4], colours[0]), Vertex(indicies[5], colours[1]), Vertex(indicies[6], colours[2]) });
-	polygons.push_back({ Vertex(indicies[5], colours[3]), Vertex(indicies[7], colours[4]), Vertex(indicies[6], colours[5]) });
+	polygons.push_back({ Vertex(indicies[4], colours[3]), Vertex(indicies[5], colours[3]), Vertex(indicies[6], colours[3]) });
+	polygons.push_back({ Vertex(indicies[5], colours[3]), Vertex(indicies[7], colours[3]), Vertex(indicies[6], colours[3]) });
 	// face 5
-	polygons.push_back({ Vertex(indicies[0], colours[0]), Vertex(indicies[1], colours[1]), Vertex(indicies[4], colours[2]) });
-	polygons.push_back({ Vertex(indicies[1], colours[3]), Vertex(indicies[5], colours[4]), Vertex(indicies[4], colours[5]) });
+	polygons.push_back({ Vertex(indicies[0], colours[4]), Vertex(indicies[1], colours[4]), Vertex(indicies[4], colours[4]) });
+	polygons.push_back({ Vertex(indicies[1], colours[4]), Vertex(indicies[5], colours[4]), Vertex(indicies[4], colours[4]) });
 	// face 6
-	polygons.push_back({ Vertex(indicies[2], colours[0]), Vertex(indicies[3], colours[1]), Vertex(indicies[6], colours[2]) });
-	polygons.push_back({ Vertex(indicies[3], colours[3]), Vertex(indicies[7], colours[4]), Vertex(indicies[6], colours[5]) });
+	polygons.push_back({ Vertex(indicies[2], colours[5]), Vertex(indicies[3], colours[5]), Vertex(indicies[6], colours[5]) });
+	polygons.push_back({ Vertex(indicies[3], colours[5]), Vertex(indicies[6], colours[5]), Vertex(indicies[6], colours[5]) });
 
-	SetData(216, (void*)polygons.data());
+	SetData(polygons.size() * sizeof(Polygon), (void*)polygons.data());
+	
 }
 
 Cube::Cube(vec3 position, std::vector<vec3> colours) :
 	Shape3d(new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"))
 {
+	
 	vec3 indicies[] = {
 		{ position.x + 0, position.y + 0, position.z + 0 }, // 0
 		{ position.x + 0, position.y + 0, position.z + 1 }, // 1
@@ -69,11 +71,13 @@ Cube::Cube(vec3 position, std::vector<vec3> colours) :
 	polygons.push_back({ Vertex(indicies[2], colours[0]), Vertex(indicies[3], colours[1]), Vertex(indicies[6], colours[2]) });
 	polygons.push_back({ Vertex(indicies[3], colours[3]), Vertex(indicies[7], colours[4]), Vertex(indicies[6], colours[5]) });
 
-	SetData(216, (void*)polygons.data());
+	SetData(polygons.size() * sizeof(Polygon), (void*)polygons.data());
+	
 }
 
 Cube::Cube(vec3 position, Texture* main, Texture* blended) : Shape3d(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), main, blended)
 {
+
 	vec3 indicies[] = {
 		{ position.x + 0, position.y + 0, position.z + 0 }, // 0
 		{ position.x + 0, position.y + 0, position.z + 1 }, // 1
@@ -85,7 +89,7 @@ Cube::Cube(vec3 position, Texture* main, Texture* blended) : Shape3d(new ShaderP
 		{ position.x + 1, position.y + 1, position.z + 1 }  // 7
 	};
 
-	vec2 uvs[]{{0, 0}, {0, 1}, {1, 0}, {0, 1}, {1, 1}, {1, 0}};
+	vec2 uvs[]{ {0, 0}, {0, 1}, {1, 0}, {0, 1}, {1,0}, {1, 0} };
 	
 	// face 1
 	polygons.push_back({ Vertex(indicies[1], uvs[0]), Vertex(indicies[3], uvs[1]), Vertex(indicies[5], uvs[2]) });
@@ -106,5 +110,6 @@ Cube::Cube(vec3 position, Texture* main, Texture* blended) : Shape3d(new ShaderP
 	polygons.push_back({ Vertex(indicies[2], uvs[0]), Vertex(indicies[3], uvs[1]), Vertex(indicies[6], uvs[2]) });
 	polygons.push_back({ Vertex(indicies[3], uvs[3]), Vertex(indicies[7], uvs[4]), Vertex(indicies[6], uvs[5]) });
 
-	SetData(288, (void*)polygons.data());
+	SetData(polygons.size() * sizeof(Polygon), (void*)polygons.data());
+	
 }

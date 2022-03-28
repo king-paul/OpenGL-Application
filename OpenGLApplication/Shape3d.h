@@ -15,8 +15,8 @@ using namespace glm;
 
 struct Vertex
 {
-	Vertex() : position(0,0,0), colour(NULL), uv(NULL) {}
-	Vertex(vec3 position, vec3 colour) : position(position), colour(colour), uv(NULL) {}
+	Vertex() : position(0, 0, 0), colour(NULL) ,uv(NULL) {}
+	Vertex(vec3 position, vec3 colour) : position(position), colour(colour) , uv(NULL) {}
 	Vertex(vec3 position, vec2 uv) : position(position), colour(NULL), uv(uv) {}
 
 	vec3 position;
@@ -39,6 +39,11 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Draw();
 	void SetRotateMotion(vec3 axis, float speed);
+
+	// matrix setters
+	void SetPosition(float x, float y, float z);
+	void SetRotation(vec3 axis, float angle);
+	void SetScale(float x, float y, float z);
 
 protected:
 	GLuint triangleID;
@@ -72,8 +77,9 @@ public:
 class Plane : public Shape3d
 {
 public:
-	Plane(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1, 
-		Texture * texture = nullptr, vec3 normal = { 0, 1, 0 });
+	Plane(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1,
+		vec3 colour = {1, 1, 1});
+	Plane(Texture* texture, vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1);
 
 private:
 	vec3 normal;
