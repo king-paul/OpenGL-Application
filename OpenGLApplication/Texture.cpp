@@ -14,7 +14,7 @@ Texture::Texture(std::string filename)
 		successfullyLoaded = true;
 
 	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_3D, textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 	
 	//Bind();
 	

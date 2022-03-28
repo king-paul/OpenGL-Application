@@ -15,20 +15,24 @@ using namespace glm;
 
 struct Vertex
 {
-	Vertex(vec3 position, vec3 colour) : position(position) , colour(colour) {}
-	Vertex(vec3 position, vec2 uv) : position(position), uv(uv) {}
+	Vertex() : position(0,0,0), colour(NULL), uv(NULL) {}
+	Vertex(vec3 position, vec3 colour) : position(position), colour(colour), uv(NULL) {}
+	Vertex(vec3 position, vec2 uv) : position(position), colour(NULL), uv(uv) {}
 
 	vec3 position;
 	vec3 colour;
 	vec2 uv;
 };
 
+struct Polygon
+{
+	Vertex p1, p2, p3;
+};
+
 class Shape3d
 {
 public:
-	Shape3d(ShaderProgram*);
-	Shape3d(ShaderProgram*, Texture*);
-	Shape3d(ShaderProgram*, Texture*, Texture*);
+	Shape3d(ShaderProgram*, Texture* mainTexture = nullptr, Texture* blendedTexture = nullptr);
 	Shape3d(ShaderProgram*, Texture* diiffuse, Texture* normal, Texture* specular);
 	~Shape3d();
 	void SetData(unsigned int bufferSize, const void* data);
@@ -39,7 +43,7 @@ public:
 protected:
 	GLuint triangleID;
 	ShaderProgram* shader;
-	std::vector<Vertex[3]> polygons;
+	std::vector<Polygon> polygons;
 	vec3 position;
 
 	// matrices
@@ -58,8 +62,19 @@ protected:
 class Cube : public Shape3d
 {
 public:
-	Cube(Texture* texture);
-	Cube(Texture* mainTexture, Texture* blendedTexture);
+	Cube(std::vector<vec3> colours);
+	Cube(Texture* mainTexture, Texture* blendedTexture = nullptr);
 	Cube(vec3 position, std::vector<vec3> colours);
-	Cube(vec3 position, Texture* texture);
+	Cube(vec3 position, Texture* main, Texture* blended = nullptr);
+};
+
+
+class Plane : public Shape3d
+{
+public:
+	Plane(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1, 
+		Texture * texture = nullptr, vec3 normal = { 0, 1, 0 });
+
+private:
+	vec3 normal;
 };

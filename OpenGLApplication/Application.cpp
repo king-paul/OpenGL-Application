@@ -25,8 +25,8 @@ Application::Application()
 		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
 
 		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
-		shapes3d.push_back(new Cube(faceTexture1, faceTexture2));
-		//shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture));
+		//shapes3d.push_back(new Cube(faceTexture1, faceTexture2));
+		shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture1, faceTexture2));
 		
 		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
 		plane = new Mesh(meshShader);
