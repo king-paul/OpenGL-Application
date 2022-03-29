@@ -1,105 +1,84 @@
 #include "Mesh.h"
 
-Mesh::~Mesh() { 
-	glDeleteVertexArrays(1, &vertexArray); 
-	glDeleteBuffers(1, &vertexBuffer); 
-	glDeleteBuffers(1, &indexBuffer); 
+Mesh::Mesh(std::string filename, ShaderProgram* shader) : Shape3d(shader)
+{	
+	// allocates new space and creates ids
+	glGenBuffers(1, &vertexBufferID);
+	glGenBuffers(1, &indexBufferID);
+
+	std::vector<Vertex> vertices;	
+	
+	Assimp::Importer importer;
+	// filename, flags for process that are happening
+	const aiScene* scene = importer.ReadFile("Meshes/"+filename, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices);
+	
+	//assume there's only one mesh and create a pointer to it
+	aiMesh* meshPointer = *scene->mMeshes;
+
+	// iterate through all of the vertices in the imported mesh
+	for (unsigned int i = 0; i < meshPointer->mNumVertices; i++)
+	{
+		// pass position vertices from pointer into local vertex data strcutrue
+		Vertex currentVertex;
+		currentVertex.position.x = meshPointer->mVertices[i].x;
+		currentVertex.position.y = meshPointer->mVertices[i].y;
+		currentVertex.position.z = meshPointer->mVertices[i].z;
+
+		currentVertex.colour = { 1, 0, 0 }; // colour vertex red
+
+		// get the normals of the vertices to use for lighting
+		currentVertex.normal.x = meshPointer->mNormals[i].x;
+		currentVertex.normal.y = meshPointer->mNormals[i].y;
+		currentVertex.normal.z = meshPointer->mNormals[i].z;
+
+		vertices.push_back(currentVertex); // add to vertex vector
+	}
+
+	// iterate through indicies is loaded mesh
+	for (unsigned int i = 0; i < meshPointer->mNumFaces; i++)
+	{
+		// add indices in mesh to local indicies structure
+		indices.push_back((unsigned short)meshPointer->mFaces[i].mIndices[0]);
+		indices.push_back((unsigned short)meshPointer->mFaces[i].mIndices[1]);
+		indices.push_back((unsigned short)meshPointer->mFaces[i].mIndices[2]);
+	}
+
+	// Upload the vertices
+	// GL_ARRAY_BUFFER = vertex buffer
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID); // tells opengl to create vertex attributes with with the ID
+	// uploads data to whatever is bound
+	// GL_STATIC_DRAW - 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW); 
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // unbind the buffer after the data has been added
+
+	// Upload the indices
+	// GL_ELEMENT_ARRAY_BUFFER = index buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * indices.size(), indices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Mesh::Initialise(unsigned int vertexCount, const Vertex* vertices, 
-					  unsigned int indexCount, unsigned int* indices)
+void Mesh::Draw()
 {
-	assert(vertexArray == 0);
-
-	// generate buffers
-	glGenBuffers(1, &vertexBuffer);
-	glGenVertexArrays(1, &vertexArray);
-
-	// bind vertex array aka a mesh wrapper 
-	glBindVertexArray(vertexArray);
+	// enable attributes in vertex shader
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(3);
 
 	// bind vertex buffer
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 
-	// fill vertex buffer
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Vertex), 
-		vertices, GL_STATIC_DRAW);
+	// assign the arrtibute data to draw with
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, colour));
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 
-	// enable first element as position
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-
-	// bind indices if there are any
-	if (indexCount != 0) {
-		glGenBuffers(1, &indexBuffer);
-
-		// bind vertex buffer
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-
-		// fill vertex buffer
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int),
-			indices, GL_STATIC_DRAW);
-
-		triangleCount = indexCount / 3;
-	}
-	else { 
-		triangleCount = vertexCount / 3; 
-	}
-
-	// unbind buffers
-	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void Mesh::InitialiseQuad() {
-
-	// check that the mesh is not initialized already 
-	assert(vertexArray == 0);
-
-	// generate buffers 
-	glGenBuffers(1, &vertexBuffer); 
-	glGenVertexArrays(1, &vertexArray);
-
-	// bind vertex array aka a mesh wrapper 
-	glBindVertexArray(vertexArray); 
-
-	// bind vertex buffer 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-
-	// define 6 vertices for 2 triangles 
-	Vertex vertices[6];
-	// first triangle
-	vertices[0].position = { -0.5f, 0, 0.5f, 1 };
-	vertices[1].position = { 0.5f, 0, 0.5f, 1 };
-	vertices[2].position = { -0.5f, 0, -0.5f, 1 };
-	// second triangle
-	vertices[3].position = { -0.5f, 0, -0.5f, 1 };
-	vertices[4].position = { 0.5f, 0, 0.5f, 1 };
-	vertices[5].position = { 0.5f, 0, -0.5f, 1 };
-
-	// fill vertex buffer
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex), vertices, GL_STATIC_DRAW);
-
-	// unbind buffers
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// quad has 2 triangles 
-	triangleCount = 2;
-}
-
-void Mesh::Draw() 
-{
-	//Shape3d::Draw();
-	
-	glBindVertexArray(vertexArray);
-	// using indices or just vertices?
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // unbinds vertex buffer
 
 	shader->UseShader();
 
-	if (indexBuffer != 0)
-		glDrawElements(GL_TRIANGLES, 3 * triangleCount, GL_UNSIGNED_INT, 0);
-	else
-		glDrawArrays(GL_TRIANGLES, 0, 3 * triangleCount);
+	// bind indices and then draw them
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
+	glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_SHORT, 0); // draws the mesh on the screen
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

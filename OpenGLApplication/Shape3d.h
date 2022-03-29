@@ -22,6 +22,8 @@ struct Vertex
 	vec3 position;
 	vec3 colour;
 	vec2 uv;
+
+	vec3 normal;
 };
 
 struct Polygon
@@ -46,7 +48,8 @@ public:
 	void SetScale(float x, float y, float z);
 
 protected:
-	GLuint triangleID;
+	GLuint indexBufferID;
+	GLuint vertexBufferID;
 	ShaderProgram* shader;
 	std::vector<Polygon> polygons;
 	vec3 position;

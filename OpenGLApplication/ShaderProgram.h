@@ -17,6 +17,7 @@ private:
 
 public:
 	ShaderProgram() {}
+	ShaderProgram(std::string vertexFilename);
 	ShaderProgram(std::string vertexFilename, std::string fragmentFilename);
 
 	~ShaderProgram() {}	//TODO this should free the resources of shader.
@@ -30,4 +31,5 @@ public:
 	void SetUniform(std::string varName, float value);
 	void SetUniform(std::string varName, int value);
 	void SetUniform(std::string varName, glm::mat4 value);
+	void SetUnifrom(std::string varName, glm::vec3 value);
 };

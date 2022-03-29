@@ -2,6 +2,56 @@
 #include "Utilities.h"
 #include <iostream>
 
+ShaderProgram::ShaderProgram(std::string vertexFilename)
+{
+	everythingIsOkay = true;
+
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+	shaderProgram = glCreateProgram();
+
+	std::string vertexSource = LoadFileAsString("Shaders/" + vertexFilename);
+
+	const char* vertexSourceC = vertexSource.c_str();
+
+	glShaderSource(vertexShader, 1, &vertexSourceC, nullptr);
+	glCompileShader(vertexShader);
+
+	GLchar errorLog[512];
+	GLint success = 0;
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (success == GL_FALSE)
+	{
+		//Something failed with the vertex shader compilation
+		std::cout << "Vertex shader " << vertexFilename << " failed because..." << std::endl;
+		glGetShaderInfoLog(vertexShader, 512, nullptr, errorLog);
+		std::cout << errorLog << std::endl;
+		everythingIsOkay = false;
+	}
+	else
+	{
+		std::cout << "Everything is okay (with the vertex shader at least)" << std::endl;
+	}
+
+	glAttachShader(shaderProgram, fragmentShader);
+
+	glLinkProgram(shaderProgram);
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (success == GL_FALSE)
+	{
+		std::cout << "The linking is busted or something" << std::endl;
+		glGetProgramInfoLog(shaderProgram, 512, nullptr, errorLog);
+		std::cout << errorLog << std::endl;
+		everythingIsOkay = false;
+	}
+
+	if (everythingIsOkay)
+	{
+		std::cout << "The Vertex shader was loaded successfully" << std::endl;
+	}
+}
+
 ShaderProgram::ShaderProgram(std::string vertexFilename, std::string fragmentFilename)
 {
 	everythingIsOkay = true;
@@ -11,8 +61,8 @@ ShaderProgram::ShaderProgram(std::string vertexFilename, std::string fragmentFil
 	
 	shaderProgram = glCreateProgram();
 	
-	std::string vertexSource = LoadFileAsString(vertexFilename);
-	std::string fragmentSource = LoadFileAsString(fragmentFilename);
+	std::string vertexSource = LoadFileAsString("Shaders/" + vertexFilename);
+	std::string fragmentSource = LoadFileAsString("Shaders/" + fragmentFilename);
 	
 	const char* vertexSourceC = vertexSource.c_str();
 
@@ -53,7 +103,6 @@ ShaderProgram::ShaderProgram(std::string vertexFilename, std::string fragmentFil
 	{
 		std::cout << "Everything is okay (with the fragment shader at least)" << std::endl;
 	}
-
 
 	glAttachShader(shaderProgram, fragmentShader);
 	glAttachShader(shaderProgram, vertexShader);
@@ -105,4 +154,11 @@ void ShaderProgram::SetUniform(std::string varName, glm::mat4 value)
 	GLuint varLoc = glGetUniformLocation(shaderProgram, varName.c_str());
 	UseShader();
 	glUniformMatrix4fv(varLoc, 1, GL_FALSE, &value[0][0]);
+}
+
+void ShaderProgram::SetUnifrom(std::string varName, glm::vec3 value)
+{
+	GLuint varLoc = glGetUniformLocation(shaderProgram, varName.c_str());
+	UseShader();
+	//glUniform3fv(varLoc, 3, (GLfloat) value);
 }

@@ -60,9 +60,6 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files\Shapes</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\Bootstrap</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +101,6 @@
     <ClInclude Include="Shape3d.h">
       <Filter>Header Files\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files\Shapes</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -122,33 +119,42 @@
     <ClInclude Include="Input.h">
       <Filter>Header Files\Bootstrap</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Working\SimpleShader2d.fsd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Working\SquareShader.vsd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Working\TriangleShader.vsd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Working\TextureShader.fsd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Working\3dVertexShader.vsd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Working\ColourShader.fsd">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\Working\CameraShader.vsd">
-      <Filter>Resource Files</Filter>
-    </None>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Working\face.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Working\Shaders\3dVertexShader.vsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\AmbientDiffuse.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\CameraShader.vsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\ColourShader.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\Phong.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\SimpleShader2d.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\SquareShader.vsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\TextureShader.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\TriangleShader.vsd">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

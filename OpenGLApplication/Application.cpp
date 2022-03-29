@@ -24,12 +24,15 @@ Application::Application()
 		
 		//faceTexture->PrintAsciiImage();
 
-		shapes3d.push_back(new Plane());
+		//shapes3d.push_back(new Plane({0, 0, 0}, 5, 5));
 
-		int winWidth, winHeight;
-		glfwGetWindowSize(window, &winWidth, &winHeight);
+		shapes3d.push_back(new Soulspear());
 
-		mainCamera = new Camera(winWidth, winHeight);
+
+		//int winWidth, winHeight;
+		//glfwGetWindowSize(window, &winWidth, &winHeight);
+
+		//mainCamera = new Camera(winWidth, winHeight);
 	}
 }
 
@@ -47,7 +50,6 @@ Application::~Application()
 		delete shape;
 	}
 
-	delete plane;
 	delete faceTexture1;
 	delete faceTexture2;
 	delete mainCamera;
@@ -117,10 +119,10 @@ void Application::Draw()
 	glClearColor(0.25f, 0.25f, 0.25f, 1);	
 
 	// draw shapes
-	for (Shape2d* shape : shapes)
+	/*for (Shape2d* shape : shapes)
 	{
 		shape->Draw();
-	}
+	}*/
 	for (Shape3d* shape : shapes3d)
 	{
 		shape->Draw();

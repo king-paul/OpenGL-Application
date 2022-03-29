@@ -15,12 +15,10 @@ Shape3d::~Shape3d()
 
 void Shape3d::SetData(unsigned int bufferSize, const void* data)
 {
-	glGenBuffers(1, &triangleID);
+	glGenBuffers(1, &vertexBufferID);
 
-	glBindBuffer(GL_ARRAY_BUFFER, triangleID);
-
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, bufferSize, data, GL_STATIC_DRAW);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// enables vertex attribures from vertex shaders
@@ -53,25 +51,28 @@ void Shape3d::Update(float deltaTime)
 	// mat4 Perspective(float fovInRadians, float aspectRatio, float nearPlane, float farPlane);
 	projection = glm::perspective(3.14159f / 4, 1920.0f / 1080, 0.1f, 100.0f);
 
-	shader->SetUniform("mvp", projection * view * rotation);
-
-	if (mainTexture && blendedTexture)
+	if (shader) 
 	{
-		shader->SetUniform("baseTexture", 0);
-		shader->SetUniform("blendedTexture", 1);
+		shader->SetUniform("mvp", projection * view * rotation);
+
+		if (mainTexture && blendedTexture)
+		{
+			shader->SetUniform("baseTexture", 0);
+			shader->SetUniform("blendedTexture", 1);
+		}
 	}
 }
 
 void Shape3d::Draw()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, triangleID);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	
 	if (mainTexture)
 	{
 		// assigns attributes from vertex shader
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0); // Position
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float))); // Colour
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float))); // UVs
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0); // Position
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float))); // Colour
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(6 * sizeof(float))); // UVs
 	}
 	else 
 	{

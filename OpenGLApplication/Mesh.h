@@ -1,34 +1,32 @@
 #pragma once
-#include "glad.h"
-#include <glm.hpp>
+#include <string>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include "Shape3d.h"
 
 class Mesh : public Shape3d
 {
 public:
-
-	Mesh(Texture* texture) : Shape3d(new ShaderProgram("3dVertexShader.vsd", "3dFragmentShader.fsd"), texture),
-		triangleCount(0), vertexArray(0), vertexBuffer(0), indexBuffer(0) { }
-	Mesh(ShaderProgram* shader) : Shape3d(shader, NULL), triangleCount(0), vertexArray(0), vertexBuffer(0), indexBuffer(0) { }
-	Mesh(unsigned int triCount, GLuint vao, GLuint vbo, GLuint ibo) : Shape3d(new ShaderProgram("3dVertexShader.vsd", "3dFragmentShader.fsd"), NULL), 
-		triangleCount(triCount), vertexArray(vao), vertexBuffer(vbo), indexBuffer(ibo) { }
-	~Mesh();
-
-	struct Vertex { 
-		glm::vec4 position; 
-		glm::vec4 normal; 
-		glm::vec2 texCoord; 
-	};
-
-	void Initialise(unsigned int vertexCount, const Vertex* vertices, unsigned int indexCount = 0, 
-		unsigned int* indices = nullptr);
-	void InitialiseQuad();
+	Mesh(std::string filename, ShaderProgram *shader = nullptr);
+	//~Mesh();
 	void Draw() override;
 
-protected:
-	unsigned int triangleCount;
-	GLuint vertexArray;
-	GLuint vertexBuffer;
-	GLuint indexBuffer;
+private:		
+	std::vector<unsigned short> indices;
 };
 
+
+class Soulspear : public Mesh
+{
+public:
+	Soulspear() : Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd")) { }
+};
+
+class Bunny : public Mesh
+{
+public:
+	Bunny() : Mesh("Bunny.obj") { }
+};
