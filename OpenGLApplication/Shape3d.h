@@ -34,8 +34,8 @@ struct Polygon
 class Shape3d
 {
 public:
-	Shape3d(ShaderProgram*, Texture* mainTexture = nullptr, Texture* blendedTexture = nullptr);
-	Shape3d(ShaderProgram*, Texture* diiffuse, Texture* normal, Texture* specular);
+	Shape3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, Texture* mainTexture = nullptr, Texture* blendedTexture = nullptr);
+	Shape3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal, Texture* specular);
 	~Shape3d();
 	void SetData(unsigned int bufferSize, const void* data);
 	virtual void Update(float deltaTime);
@@ -71,7 +71,6 @@ class Cube : public Shape3d
 {
 public:
 	Cube(std::vector<vec3> colours);
-	Cube(Texture* mainTexture, Texture* blendedTexture = nullptr);
 	Cube(vec3 position, std::vector<vec3> colours);
 	Cube(vec3 position, Texture* main, Texture* blended = nullptr);
 };
@@ -80,8 +79,7 @@ public:
 class Plane : public Shape3d
 {
 public:
-	Plane(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1,
-		vec3 colour = {1, 1, 1});
+	Plane(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1,vec3 colour = {1, 1, 1});
 	Plane(Texture* texture, vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1);
 
 private:

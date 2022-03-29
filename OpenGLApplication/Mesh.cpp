@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader) : Shape3d(shader)
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture) : Shape3d(shader, position, texture)
 {	
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
@@ -20,16 +20,17 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader) : Shape3d(shader)
 	{
 		// pass position vertices from pointer into local vertex data strcutrue
 		Vertex currentVertex;
-		currentVertex.position.x = meshPointer->mVertices[i].x;
-		currentVertex.position.y = meshPointer->mVertices[i].y;
-		currentVertex.position.z = meshPointer->mVertices[i].z;
+		currentVertex.position.x = position.x + meshPointer->mVertices[i].x;
+		currentVertex.position.y = position.y + meshPointer->mVertices[i].y;
+		currentVertex.position.z = position.z + meshPointer->mVertices[i].z;
 
 		currentVertex.colour = { 1, 0, 0 }; // colour vertex red
+		currentVertex.uv = { 0, 0 };
 
 		// get the normals of the vertices to use for lighting
-		currentVertex.normal.x = meshPointer->mNormals[i].x;
-		currentVertex.normal.y = meshPointer->mNormals[i].y;
-		currentVertex.normal.z = meshPointer->mNormals[i].z;
+		currentVertex.normal.x = position.x + meshPointer->mNormals[i].x;
+		currentVertex.normal.y = position.y + meshPointer->mNormals[i].y;
+		currentVertex.normal.z = position.z + meshPointer->mNormals[i].z;
 
 		vertices.push_back(currentVertex); // add to vertex vector
 	}
@@ -63,6 +64,7 @@ void Mesh::Draw()
 	// enable attributes in vertex shader
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 	glEnableVertexAttribArray(3);
 
 	// bind vertex buffer
@@ -71,6 +73,7 @@ void Mesh::Draw()
 	// assign the arrtibute data to draw with
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, colour));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0); // unbinds vertex buffer

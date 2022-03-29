@@ -23,7 +23,7 @@ Plane::Plane(vec3 position, float scaleX , float scaleY, vec3 colour)
 }
 
 Plane::Plane(Texture* texture, vec3 position, float scaleX, float scaleY)
-	: Shape3d(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), texture)
+	: Shape3d(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), position, texture)
 {	
 	vec3 vertices[] = {	// first triangle
 						vec3(position.x + (- 1 * scaleX) ,position.y, position.z + (1 * scaleY)),

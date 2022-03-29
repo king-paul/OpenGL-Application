@@ -10,8 +10,7 @@
 class Mesh : public Shape3d
 {
 public:
-	Mesh(std::string filename, ShaderProgram *shader = nullptr);
-	//~Mesh();
+	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture = nullptr);
 	void Draw() override;
 
 private:		
@@ -22,11 +21,14 @@ private:
 class Soulspear : public Mesh
 {
 public:
-	Soulspear() : Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd")) { }
+	Soulspear(vec3 position = { 0, 0, 0 }) :
+		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"),
+			position, new Texture("soulspear_diffuse.tga")) { }
 };
 
 class Bunny : public Mesh
 {
 public:
-	Bunny() : Mesh("Bunny.obj") { }
+	Bunny(vec3 position = { 0, 0, 0 }) :
+		Mesh("Bunny.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), position) { }
 };

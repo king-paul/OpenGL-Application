@@ -1,9 +1,15 @@
 #include "Shape3d.h"
 
-Shape3d::Shape3d(ShaderProgram* shader, Texture* main, Texture* blend) :
-	shader(shader), mainTexture(main), blendedTexture(blend)
+Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* main, Texture* blend) :
+	shader(shader), position(position), mainTexture(main), blendedTexture(blend)
 {
-	position = vec3(0, 0, 0);
+	rotateAxis = vec3(0, 1, 0);
+	transform = glm::identity<mat4>();
+}
+
+Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal, Texture* specular):
+	shader(shader), position(position), diffuse(diffuse), normal(normal), specular(specular)
+{
 	rotateAxis = vec3(0, 1, 0);
 	transform = glm::identity<mat4>();
 }
@@ -55,10 +61,12 @@ void Shape3d::Update(float deltaTime)
 	{
 		shader->SetUniform("mvp", projection * view * rotation);
 
-		if (mainTexture && blendedTexture)
+		if (mainTexture)
 		{
 			shader->SetUniform("baseTexture", 0);
-			shader->SetUniform("blendedTexture", 1);
+
+			if(blendedTexture)
+				shader->SetUniform("blendedTexture", 1);
 		}
 	}
 }

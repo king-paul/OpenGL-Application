@@ -5,8 +5,7 @@
 
 Texture::Texture(std::string filename)
 {
-
-	imageData = stbi_load(filename.c_str(), &width, &height, &channelCount, 0);	
+	imageData = stbi_load(("Textures/" + filename).c_str(), &width, &height, &channelCount, 0);
 	// FIXME this needs proper error handling. 
 	// For now we're just going to assume the load worked, and if it doesn't, we'll probably crash.
 

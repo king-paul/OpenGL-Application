@@ -12,7 +12,6 @@ Application::Application()
 
 		//shapes3d.push_back(new Cube(colours));
 		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
-		//shapes3d.push_back(new Cube(faceTexture1, faceTexture2));
 		//shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture1, faceTexture2));
 		
 		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
@@ -26,8 +25,7 @@ Application::Application()
 
 		//shapes3d.push_back(new Plane({0, 0, 0}, 5, 5));
 
-		shapes3d.push_back(new Soulspear());
-
+		shapes3d.push_back(new Soulspear(vec3(0, -5, 0)));
 
 		//int winWidth, winHeight;
 		//glfwGetWindowSize(window, &winWidth, &winHeight);
