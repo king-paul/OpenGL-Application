@@ -24,8 +24,8 @@ class Soulspear : public Mesh
 {
 public:
 	Soulspear(vec3 position = { 0, 0, 0 }) :
-		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"),
-			position) { }//, new Texture("soulspear_diffuse.tga")) { }
+		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"),
+			position, new Texture("soulspear_diffuse.tga")) { }
 };
 
 class Bunny : public Mesh

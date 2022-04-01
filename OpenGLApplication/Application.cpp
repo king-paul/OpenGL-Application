@@ -26,7 +26,7 @@ Application::Application()
 		//shapes3d.push_back(new Plane({0, 0, 0}, 5, 5));
 
 		shapes3d.push_back(new Soulspear(vec3(0, -5, 0)));
-		//shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+		shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 		
 		//int winWidth, winHeight;
 		//glfwGetWindowSize(window, &winWidth, &winHeight);

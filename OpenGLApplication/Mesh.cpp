@@ -24,8 +24,15 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 		currentVertex.position.y = position.y + meshPointer->mVertices[i].y;
 		currentVertex.position.z = position.z + meshPointer->mVertices[i].z;
 
-		currentVertex.colour = { 1, 0, 0 }; // colour vertex red
-		//currentVertex.uv = { 0, 0 };
+		if (meshPointer->HasTextureCoords(0))
+		{
+			currentVertex.uv.x = 1 - meshPointer->mTextureCoords[0][i].x;
+			currentVertex.uv.y = 1 - meshPointer->mTextureCoords[0][i].y;
+		}
+		else
+		{
+			currentVertex.colour = { 1, 0, 0 }; // colour vertex red
+		}		
 
 		// get the normals of the vertices to use for lighting
 		currentVertex.normal.x = meshPointer->mNormals[i].x;
@@ -68,6 +75,22 @@ void Mesh::SetData(unsigned int bufferSize, const void* data)
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 	glEnableVertexAttribArray(3);
+
+	if (mainTexture)
+	{
+		glEnableVertexAttribArray(2);
+		mainTexture->Bind(0);
+
+		if (blendedTexture)
+			blendedTexture->Bind(1);
+	}
+	else if (diffuse && normal && specular)
+	{
+		glEnableVertexAttribArray(2);
+		diffuse->Bind(0);
+		normal->Bind(1);
+		specular->Bind(2);
+	}
 }
 
 void Mesh::Draw()
