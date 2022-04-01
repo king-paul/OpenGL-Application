@@ -25,12 +25,12 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 		currentVertex.position.z = position.z + meshPointer->mVertices[i].z;
 
 		currentVertex.colour = { 1, 0, 0 }; // colour vertex red
-		currentVertex.uv = { 0, 0 };
+		//currentVertex.uv = { 0, 0 };
 
 		// get the normals of the vertices to use for lighting
-		currentVertex.normal.x = position.x + meshPointer->mNormals[i].x;
-		currentVertex.normal.y = position.y + meshPointer->mNormals[i].y;
-		currentVertex.normal.z = position.z + meshPointer->mNormals[i].z;
+		currentVertex.normal.x = meshPointer->mNormals[i].x;
+		currentVertex.normal.y = meshPointer->mNormals[i].y;
+		currentVertex.normal.z = meshPointer->mNormals[i].z;
 
 		vertices.push_back(currentVertex); // add to vertex vector
 	}
@@ -44,12 +44,17 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 		indices.push_back((unsigned short)meshPointer->mFaces[i].mIndices[2]);
 	}
 
+	SetData(sizeof(Vertex) * vertices.size(), vertices.data());
+}
+
+void Mesh::SetData(unsigned int bufferSize, const void* data)
+{
 	// Upload the vertices
 	// GL_ARRAY_BUFFER = vertex buffer
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID); // tells opengl to create vertex attributes with with the ID
 	// uploads data to whatever is bound
 	// GL_STATIC_DRAW - 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, bufferSize, data, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0); // unbind the buffer after the data has been added
 
 	// Upload the indices
@@ -57,16 +62,17 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * indices.size(), indices.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
 
-void Mesh::Draw()
-{
 	// enable attributes in vertex shader
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 	glEnableVertexAttribArray(3);
+}
 
+void Mesh::Draw()
+{
+	
 	// bind vertex buffer
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 

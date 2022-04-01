@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Bootstrap">
       <UniqueIdentifier>{c4f31a85-c7b4-42f2-bd2f-b65e38485900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Textures">
+      <UniqueIdentifier>{bf1ccb68-093a-4c39-8d6e-617f02fbcde3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -124,11 +127,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Working\face.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Working\Shaders\3dVertexShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
@@ -156,5 +154,10 @@
     <None Include="..\Working\Shaders\TriangleShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Working\face.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

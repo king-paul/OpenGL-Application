@@ -36,8 +36,7 @@ class Shape3d
 public:
 	Shape3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, Texture* mainTexture = nullptr, Texture* blendedTexture = nullptr);
 	Shape3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal, Texture* specular);
-	~Shape3d();
-	void SetData(unsigned int bufferSize, const void* data);
+	~Shape3d();	
 	virtual void Update(float deltaTime);
 	virtual void Draw();
 	void SetRotateMotion(vec3 axis, float speed);
@@ -48,6 +47,8 @@ public:
 	void SetScale(float x, float y, float z);
 
 protected:
+	virtual void SetData(unsigned int bufferSize, const void* data);
+
 	GLuint indexBufferID;
 	GLuint vertexBufferID;
 	ShaderProgram* shader;

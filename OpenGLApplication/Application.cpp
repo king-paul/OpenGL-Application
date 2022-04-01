@@ -26,7 +26,8 @@ Application::Application()
 		//shapes3d.push_back(new Plane({0, 0, 0}, 5, 5));
 
 		shapes3d.push_back(new Soulspear(vec3(0, -5, 0)));
-
+		//shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+		
 		//int winWidth, winHeight;
 		//glfwGetWindowSize(window, &winWidth, &winHeight);
 
@@ -117,16 +118,15 @@ void Application::Draw()
 	glClearColor(0.25f, 0.25f, 0.25f, 1);	
 
 	// draw shapes
-	/*for (Shape2d* shape : shapes)
+	for (Shape2d* shape : shapes)
 	{
 		shape->Draw();
-	}*/
+	}
 	for (Shape3d* shape : shapes3d)
 	{
 		shape->Draw();
 	}
 
-	//plane->Draw();
 }
 
 void Application::Create2dShapes()

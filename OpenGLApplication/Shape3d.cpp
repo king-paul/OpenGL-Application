@@ -55,20 +55,22 @@ void Shape3d::Update(float deltaTime)
 	//mat4 LookAt(vec3 cameraPosition, vec3 focalPoint, vec3 upDirection);
 	view = glm::lookAt(glm::vec3(10, 10, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	// mat4 Perspective(float fovInRadians, float aspectRatio, float nearPlane, float farPlane);
-	projection = glm::perspective(3.14159f / 4, 1920.0f / 1080, 0.1f, 100.0f);
+	projection = glm::perspective(PI / 4, 1920.0f / 1080, 0.1f, 100.0f);
 
-	if (shader) 
+	// set projection and view
+	shader->SetUniform("mvpMatrix", projection * view * rotation);
+	shader->SetUniform("modelMatrix", rotation);
+
+	if (mainTexture)
 	{
-		shader->SetUniform("mvp", projection * view * rotation);
+		shader->SetUniform("baseTexture", 0);
 
-		if (mainTexture)
-		{
-			shader->SetUniform("baseTexture", 0);
-
-			if(blendedTexture)
-				shader->SetUniform("blendedTexture", 1);
-		}
+		if(blendedTexture)
+			shader->SetUniform("blendedTexture", 1);
 	}
+
+	shader->SetUniform("fromLight", -glm::normalize(glm::vec3(1, -1, 1)));
+
 }
 
 void Shape3d::Draw()
