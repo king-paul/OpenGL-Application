@@ -5,9 +5,9 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "Shape3d.h"
+#include "Object3d.h"
 
-class Mesh : public Shape3d
+class Mesh : public Object3d
 {
 public:
 	Mesh(std::string filename, ShaderProgram* shader, vec3 colour = {0, 0, 0}, vec3 position = {0,0,0});

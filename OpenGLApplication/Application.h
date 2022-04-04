@@ -49,7 +49,9 @@ private:
 
 	// graphic objects
 	std::vector<Shape2d*> shapes;
-	std::vector<Shape3d*> shapes3d;
+	std::vector<Object3d*> models;
+	Plane* plane;
+
 	ShaderProgram* meshShader;
 
 	// cameras

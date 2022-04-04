@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colour) : Shape3d(shader, position)
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colour) : Object3d(shader, position)
 {
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
@@ -47,7 +47,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 	SetData(sizeof(Vertex) * vertices.size(), vertices.data());
 }
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture) : Shape3d(shader, position, texture)
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture) : Object3d(shader, position, texture)
 {	
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
@@ -98,7 +98,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 }
 
 Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, Texture* specular) :
-	Shape3d(shader, position, diffuse, normal, specular)
+	Object3d(shader, position, diffuse, normal, specular)
 {
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
@@ -181,21 +181,19 @@ void Mesh::SetData(unsigned int bufferSize, const void* data)
 	glEnableVertexAttribArray(4);
 	glEnableVertexAttribArray(5);
 
-	if (mainTexture)
-	{
-		glEnableVertexAttribArray(2);
-		mainTexture->Bind(0);
+	if (texDiffuse)
+	{		
+		texDiffuse->Bind(0);
 
-		if (blendedTexture)
-			blendedTexture->Bind(1);
+		if (texNormal)
+		{
+			texDiffuse->Bind(1);
+
+			if (texSpecular)
+				texSpecular->Bind(2);
+		}
 	}
-	else if (diffuse && normal)// && specular)
-	{
-		glEnableVertexAttribArray(2);
-		diffuse->Bind(0);
-		normal->Bind(1);
-		//specular->Bind(2);
-	}
+
 }
 
 void Mesh::Draw()
