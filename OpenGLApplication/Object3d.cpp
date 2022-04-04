@@ -26,14 +26,14 @@ Object3d::~Object3d()
 	delete shader;
 }
 
-void Object3d::Update(float deltaTime)
+void Object3d::Update(float deltaTime, Camera* camera)
 {
 	// mat4 Rotate(mat4 matrix, float angle, vec3 axis);
 	transform = glm::rotate(glm::mat4(1), rotateSpeed * (float)glfwGetTime(), rotateAxis);
 	//mat4 LookAt(vec3 cameraPosition, vec3 focalPoint, vec3 upDirection);
-	view = glm::lookAt(glm::vec3(10, 10, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	view = camera->GetViewMatrix(); //glm::lookAt(glm::vec3(5, 0, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	// mat4 Perspective(float fovInRadians, float aspectRatio, float nearPlane, float farPlane);
-	projection = glm::perspective(PI / 4, 1920.0f / 1080, 0.1f, 100.0f);
+	projection = camera->GetProjectionMatrix(1920, 1080); //glm::perspective(PI / 4, 1920.0f / 1080, 0.1f, 100.0f);
 
 	// set projection and view
 	shader->SetUniform("mvpMatrix", projection * view * transform);

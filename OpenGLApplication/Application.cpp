@@ -26,10 +26,10 @@ Application::Application()
 		models.push_back(new Soulspear(vec3(0, -4.5f, 0)));
 		models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 		
-		//int winWidth, winHeight;
-		//glfwGetWindowSize(window, &winWidth, &winHeight);
+		int winWidth, winHeight;
+		glfwGetWindowSize(window, &winWidth, &winHeight);
 
-		//mainCamera = new Camera(winWidth, winHeight);
+		mainCamera = new Camera(window, {-10, 0, 0});
 	}
 }
 
@@ -100,11 +100,11 @@ bool Application::Update()
 	}
 	for (Object3d* object : models)
 	{
-		object->Update(deltaTime);
+		object->Update(deltaTime, mainCamera);
 	}
 
-	plane->Update(deltaTime);
-	//mainCamera->Update(deltaTime);
+	//plane->Update(deltaTime);
+	mainCamera->Update(deltaTime);
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
@@ -127,7 +127,7 @@ void Application::Draw()
 		object->Draw();
 	}
 
-	plane->Draw();
+	//plane->Draw();
 
 }
 

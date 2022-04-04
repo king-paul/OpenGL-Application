@@ -1,8 +1,6 @@
 #include "Camera.h"
-#include <ext/matrix_clip_space.hpp>
-#include "Input.h"
 
-Camera::Camera(int width, int height) : shader(new ShaderProgram()), windowWidth(width), windowHeight(height)
+Camera::Camera(GLFWwindow* window, vec3 position) : m_position(position), m_window(window)
 {
 
 }
@@ -20,19 +18,11 @@ mat4 Camera::GetProjectionMatrix(float w, float h)
 	return glm::perspective(glm::pi<float>() * 0.25f, w / h, 0.1f, 1000.f);
 }
 
+//----------------------------//
+// Camera movement from input //
+//----------------------------//
 void Camera::Update(float deltaTime)
 {
-	// bind transform
-	glm::mat4 projectionMatrix = GetProjectionMatrix(windowWidth, windowHeight);
-	glm::mat4 viewMatrix = GetViewMatrix();
-	auto pvm = projectionMatrix * viewMatrix;// *m_bunnyTransform;
-
-	shader->SetUniform("mvp", projection * view * rotation);
-	
-	////////////////////////////////
-	// Camera movement from input //
-	////////////////////////////////
-	aie::Input* input = aie::Input::getInstance();
 	float thetaR = glm::radians(m_theta);
 	float phiR = glm::radians(m_phi);
 
@@ -42,20 +32,41 @@ void Camera::Update(float deltaTime)
 	glm::vec3 up(0, 1, 0);
 
 	// use WASD, ZX keys to move camera around
-	if (input->isKeyDown(aie::INPUT_KEY_X))
-		m_position += up * deltaTime;
+	
+	// forward, back, left and right
+	if (glfwGetKey(m_window, GLFW_KEY_W) || glfwGetKey(m_window, GLFW_KEY_UP))
+		m_position += forward * MOVE_SPEED * deltaTime;
+	if (glfwGetKey(m_window, GLFW_KEY_S) || glfwGetKey(m_window, GLFW_KEY_DOWN))
+		m_position -= forward * MOVE_SPEED * deltaTime;
+	if (glfwGetKey(m_window, GLFW_KEY_A) || glfwGetKey(m_window, GLFW_KEY_LEFT))
+		m_position -= right * MOVE_SPEED * deltaTime;
+	if (glfwGetKey(m_window, GLFW_KEY_D) || glfwGetKey(m_window, GLFW_KEY_RIGHT))
+		m_position += right * MOVE_SPEED * deltaTime;
+
+	// up and down
+	if (glfwGetKey(m_window, GLFW_KEY_Z))
+		m_position += up * MOVE_SPEED * deltaTime;
+	if (glfwGetKey(m_window, GLFW_KEY_X))
+		m_position -= up * MOVE_SPEED * deltaTime;
+
+	if (glfwGetKey(m_window, GLFW_KEY_P))
+		std::cout << "Camera Position (" << m_position.x << ", " << m_position.y << ", " 
+										 << m_position.z << ")" << std::endl;
 
 	// get the current mouse coordinates
-	float mx = input->getMouseX();
-	float my = input->getMouseY();
-	const float turnSpeed = 0.1f;
+	double mouseX, mouseY;
+	glfwGetCursorPos(m_window, &mouseX, &mouseY);
+	
 	// if the right button is down, increment theta and phi
-	if (input->isMouseButtonDown(aie::INPUT_MOUSE_BUTTON_RIGHT))
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_RIGHT))
 	{
-		m_theta += turnSpeed * (mx - m_lastMouseX);
-		m_phi -= turnSpeed * (my - m_lastMouseY);
+		//std::cout << "Cursor is at position (" << mouseX << ", " << mouseY << ")" << std::endl;
+
+		m_theta += TURN_SPEED * (mouseX - m_lastMouseX);
+		m_phi -= TURN_SPEED * (mouseY - m_lastMouseY);
 	}
+
 	// store this frames values for next frame
-	m_lastMouseX = mx;
-	m_lastMouseY = my;
+	m_lastMouseX = mouseX;
+	m_lastMouseY = mouseY;
 }

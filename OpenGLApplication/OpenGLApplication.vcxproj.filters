@@ -25,9 +25,6 @@
     <Filter Include="Header Files\OBJ">
       <UniqueIdentifier>{e02cccc7-b31f-4f7e-8168-bc35bf047db8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Bootstrap">
-      <UniqueIdentifier>{f294fd1a-deb0-458f-b3a7-56b60bc8665f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Bootstrap">
       <UniqueIdentifier>{c4f31a85-c7b4-42f2-bd2f-b65e38485900}</UniqueIdentifier>
     </Filter>
@@ -121,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files\Bootstrap</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files</Filter>

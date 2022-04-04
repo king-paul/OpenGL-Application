@@ -4,6 +4,7 @@
 #include <glm.hpp>
 #include <vector>
 #include "Texture.h"
+#include "Camera.h"
 
 using namespace glm;
 
@@ -53,10 +54,11 @@ public:
 	Object3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = {0, 0, 0});
 	Object3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal = nullptr, Texture* specular = nullptr);
 	~Object3d();
-	virtual void Update(float deltaTime);
+	virtual void Update(float deltaTime, Camera* camera);
 	virtual void Draw() = 0;
 
 	// getters
+	mat4 GetTransform() { return transform; }
 	vec3 GetRotationX() { return transform[0]; }
 	vec3 GetRotationY() { return transform[1]; }
 	vec3 GetRotationZ() { return transform[2]; }
