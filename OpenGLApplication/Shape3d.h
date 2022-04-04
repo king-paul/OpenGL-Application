@@ -24,6 +24,8 @@ struct Vertex
 	vec2 uv;
 
 	vec3 normal;
+	vec3 tangeant;
+	vec3 bitangeant;
 };
 
 struct Polygon
@@ -33,7 +35,7 @@ struct Polygon
 
 class Shape3d
 {
-public:
+public:	
 	Shape3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, Texture* mainTexture = nullptr, Texture* blendedTexture = nullptr);
 	Shape3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal, Texture* specular);
 	~Shape3d();	

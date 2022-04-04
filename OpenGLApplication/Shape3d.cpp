@@ -7,7 +7,7 @@ Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* main, Texture* b
 	transform = glm::identity<mat4>();
 }
 
-Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal, Texture* specular):
+Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, Texture* specular):
 	shader(shader), position(position), diffuse(diffuse), normal(normal), specular(specular)
 {
 	rotateAxis = vec3(0, 1, 0);
@@ -21,6 +21,7 @@ Shape3d::~Shape3d()
 
 void Shape3d::SetData(unsigned int bufferSize, const void* data)
 {
+	/*
 	glGenBuffers(1, &vertexBufferID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -39,21 +40,23 @@ void Shape3d::SetData(unsigned int bufferSize, const void* data)
 		if (blendedTexture)
 			blendedTexture->Bind(1);		
 	}
-	else if (diffuse && normal && specular)
+	else if (diffuse && normal)// && specular)
 	{
 		glEnableVertexAttribArray(2);
 		diffuse->Bind(0);
 		normal->Bind(1);
-		specular->Bind(2);
+		//specular->Bind(2);
 	}
+	*/
 }
+
 
 void Shape3d::Update(float deltaTime)
 {
 	// mat4 Rotate(mat4 matrix, float angle, vec3 axis);
 	rotation = glm::rotate(glm::mat4(1), rotateSpeed * (float)glfwGetTime(), rotateAxis);
 	//mat4 LookAt(vec3 cameraPosition, vec3 focalPoint, vec3 upDirection);
-	view = glm::lookAt(glm::vec3(10, 10, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	view = glm::lookAt(glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, 0.5f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	// mat4 Perspective(float fovInRadians, float aspectRatio, float nearPlane, float farPlane);
 	projection = glm::perspective(PI / 4, 1920.0f / 1080, 0.1f, 100.0f);
 
@@ -67,6 +70,11 @@ void Shape3d::Update(float deltaTime)
 
 		if(blendedTexture)
 			shader->SetUniform("blendedTexture", 1);
+	}
+	else if (diffuse && normal)
+	{
+		shader->SetUniform("diffuseTexture", 0);
+		shader->SetUniform("normalMap", 1);
 	}
 
 	shader->SetUniform("fromLight", -glm::normalize(glm::vec3(1, -1, 1)));

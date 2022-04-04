@@ -5,9 +5,14 @@ layout (location = 0) in vec3 Position;
 layout (location = 1) in vec3 Colour;
 layout (location = 2) in vec2 UV;
 layout (location = 3) in vec3 Normal;
+layout (location = 4) in vec3 Tangeant;
+layout (location = 5) in vec3 Bitangeant;
 
 out vec3 colour;
 out vec3 worldNormals;
+out mat3 TBNmatrix;
+
+out vec3 debugColour;
 
 out vec2 uvs;
 
@@ -17,7 +22,15 @@ uniform mat4 modelMatrix;
 void main()
 {
 	colour = Colour;
-	uvs = UV;
-	worldNormals = (modelMatrix * vec4(Normal, 0.0)).xyz;
+	uvs = vec2(UV.x, UV.y);
+	worldNormals = (modelMatrix * vec4(Normal, 0)).xyz;	
+
+	TBNmatrix[0] = Tangeant;
+	TBNmatrix[1] = Bitangeant;
+	TBNmatrix[2] = Normal;
+
+	debugColour = Bitangeant;
+
 	gl_Position = mvpMatrix * vec4(Position, 1.0);
+
 }

@@ -16,7 +16,6 @@ Application::Application()
 		
 		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
 		//plane = new Mesh(meshShader);
-		//plane->InitialiseQuad();
 		//shapes3d.push_back(plane);
 
 		//shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
@@ -25,7 +24,7 @@ Application::Application()
 
 		//shapes3d.push_back(new Plane({0, 0, 0}, 5, 5));
 
-		shapes3d.push_back(new Soulspear(vec3(0, -5, 0)));
+		shapes3d.push_back(new Soulspear(vec3(0, -4.5f, 0)));
 		shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 		
 		//int winWidth, winHeight;

@@ -1,0 +1,21 @@
+#version 450
+
+out vec4 FragColour;
+
+//in vec3 colour;
+in vec2 uvs;
+
+in vec3 worldNormals;
+uniform vec3 fromLight;
+
+uniform sampler2D baseTexture;
+uniform sampler2D blendedTexture;
+
+void main()
+{
+	// get the tangeant space normals and multiply them by the TBN matrix
+	vec3 tangeantSpaceNormals = texture(normalMap, uvs);
+
+	float lightVal = max(dot(worldNormals, -fromLight), 0.0);
+	FragColour = texture(baseTexture, uvs) + texture(blendedTexture, uvs)) * 0.5 * lightVal ;
+}
