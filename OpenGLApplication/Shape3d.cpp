@@ -2,6 +2,7 @@
 
 Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* main, Texture* blend) :
 	shader(shader), position(position), mainTexture(main), blendedTexture(blend)
+	//Object3d(shader, position, main, blend)
 {
 	rotateAxis = vec3(0, 1, 0);
 	transform = glm::identity<mat4>();
@@ -9,6 +10,7 @@ Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* main, Texture* b
 
 Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, Texture* specular):
 	shader(shader), position(position), diffuse(diffuse), normal(normal), specular(specular)
+	//Object3d(shader, position, diffuse, normal, specular)
 {
 	rotateAxis = vec3(0, 1, 0);
 	transform = glm::identity<mat4>();
@@ -20,8 +22,7 @@ Shape3d::~Shape3d()
 }
 
 void Shape3d::SetData(unsigned int bufferSize, const void* data)
-{
-	/*
+{	
 	glGenBuffers(1, &vertexBufferID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -47,7 +48,7 @@ void Shape3d::SetData(unsigned int bufferSize, const void* data)
 		normal->Bind(1);
 		//specular->Bind(2);
 	}
-	*/
+	
 }
 
 
@@ -78,7 +79,6 @@ void Shape3d::Update(float deltaTime)
 	}
 
 	shader->SetUniform("fromLight", -glm::normalize(glm::vec3(1, -1, 1)));
-
 }
 
 void Shape3d::Draw()
@@ -102,12 +102,6 @@ void Shape3d::Draw()
 	shader->UseShader();
 
 	glDrawArrays(GL_TRIANGLES, 0, polygons.size() * 3); // draws the shape
-}
-
-void Shape3d::SetRotateMotion(vec3 axis, float speed)
-{
-	rotateAxis = axis;
-	rotateSpeed = speed;
 }
 
 // Translate, rotate and scale

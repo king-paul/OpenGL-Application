@@ -3,37 +3,16 @@
 #define GLFW_INCLUDE_NONE
 #include <glfw3.h>
 #include <glm.hpp>
-#include "Graphics.h"
-#include "ShaderProgram.h"
-#include <vector>
-
 #include <ext/matrix_transform.hpp>
 #include <ext/matrix_clip_space.hpp>
-#include "Texture.h"
+#include <vector>
+
+#include "ShaderProgram.h"
+#include "Object3d.h"
 
 using namespace glm;
 
-struct Vertex
-{
-	Vertex() : position(0, 0, 0), colour(NULL) ,uv(NULL) {}
-	Vertex(vec3 position, vec3 colour) : position(position), colour(colour) , uv(NULL) {}
-	Vertex(vec3 position, vec2 uv) : position(position), colour(NULL), uv(uv) {}
-
-	vec3 position;
-	vec3 colour;
-	vec2 uv;
-
-	vec3 normal;
-	vec3 tangeant;
-	vec3 bitangeant;
-};
-
-struct Polygon
-{
-	Vertex p1, p2, p3;
-};
-
-class Shape3d
+class Shape3d// : public Object3d
 {
 public:	
 	Shape3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, Texture* mainTexture = nullptr, Texture* blendedTexture = nullptr);
@@ -41,7 +20,6 @@ public:
 	~Shape3d();	
 	virtual void Update(float deltaTime);
 	virtual void Draw();
-	void SetRotateMotion(vec3 axis, float speed);
 
 	// matrix setters
 	void SetPosition(float x, float y, float z);
@@ -68,6 +46,9 @@ protected:
 	// textures
 	Texture *mainTexture, *blendedTexture;
 	Texture *diffuse, *normal, *specular;
+
+	// lighting
+
 };
 
 class Cube : public Shape3d

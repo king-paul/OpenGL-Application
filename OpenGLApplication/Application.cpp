@@ -10,27 +10,26 @@ Application::Application()
 
 		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
 
-		//shapes3d.push_back(new Cube(colours));
-		//shapes3d.push_back(new Cube(vec3(0, 0, 0), colours));
-		//shapes3d.push_back(new Cube(vec3(0, 0, 0), faceTexture1, faceTexture2));
+		//models.push_back(new Cube(colours));
+		//models.push_back(new Cube(vec3(0, 0, 0), colours));
+		//models.push_back(new Cube(vec3(0, 0, 0), faceTexture1, faceTexture2));
 		
 		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
 		//plane = new Mesh(meshShader);
-		//shapes3d.push_back(plane);
+		//models.push_back(plane);
 
-		//shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+
+		//models.push_back(new Plane({0, 0, 0}, 5, 5));
+		plane = (new Plane({ 0, 0, 0 }, 5, 5));
+
+		models.push_back(new Soulspear(vec3(0, -4.5f, 0)));
+		models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 		
-		//faceTexture->PrintAsciiImage();
+		int winWidth, winHeight;
+		glfwGetWindowSize(window, &winWidth, &winHeight);
 
-		//shapes3d.push_back(new Plane({0, 0, 0}, 5, 5));
-
-		shapes3d.push_back(new Soulspear(vec3(0, -4.5f, 0)));
-		shapes3d[0]->SetRotateMotion(vec3(0, 1, 0), 1);
-		
-		//int winWidth, winHeight;
-		//glfwGetWindowSize(window, &winWidth, &winHeight);
-
-		//mainCamera = new Camera(winWidth, winHeight);
+		mainCamera = new Camera(window, {0, 0, 10});
 	}
 }
 
@@ -43,11 +42,12 @@ Application::~Application()
 		delete shape;
 	}
 
-	for (Shape3d* shape : shapes3d)
+	for (Object3d* object : models)
 	{
-		delete shape;
+		delete object;
 	}
 
+	delete plane;
 	delete faceTexture1;
 	delete faceTexture2;
 	delete mainCamera;
@@ -98,12 +98,13 @@ bool Application::Update()
 	{
 		shape->Update(deltaTime);
 	}
-	for (Shape3d* shape : shapes3d)
+	for (Object3d* object : models)
 	{
-		shape->Update(deltaTime);
+		object->Update(deltaTime, mainCamera);
 	}
 
-	//mainCamera->Update(deltaTime);
+	//plane->Update(deltaTime);
+	mainCamera->Update(deltaTime);
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
@@ -121,10 +122,12 @@ void Application::Draw()
 	{
 		shape->Draw();
 	}
-	for (Shape3d* shape : shapes3d)
+	for (Object3d* object : models)
 	{
-		shape->Draw();
+		object->Draw();
 	}
+
+	//plane->Draw();
 
 }
 
