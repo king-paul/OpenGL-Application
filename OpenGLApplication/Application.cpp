@@ -13,23 +13,27 @@ Application::Application()
 		//models.push_back(new Cube(colours));
 		//models.push_back(new Cube(vec3(0, 0, 0), colours));
 		//models.push_back(new Cube(vec3(0, 0, 0), faceTexture1, faceTexture2));
-		
-		//meshShader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
-		//plane = new Mesh(meshShader);
-		//models.push_back(plane);
 
 		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 
 		//models.push_back(new Plane({0, 0, 0}, 5, 5));
 		plane = (new Plane({ 0, 0, 0 }, 5, 5));
 
-		models.push_back(new Soulspear(vec3(0, -4.5f, 0)));
+		models.push_back(new Soulspear(vec3(0, 0, 0)));
 		models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
-		
+
+		models.push_back(new Bunny(vec3(-5, -4.5f, -15), {1, 1, 0}));
+		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+
+		// add lights to scene
+		lights.push_back(Light({ 1, 0, 1 }, { 1, 1, 1 }, 2));
+		lights.push_back(Light({1, 0, -1 }, { 1, 0, 0 }, 2));
+
+		// initialize camera		
 		int winWidth, winHeight;
 		glfwGetWindowSize(window, &winWidth, &winHeight);
 
-		mainCamera = new Camera(window, {0, 0, 10});
+		mainCamera = new Camera(window, {0, 4, 10});
 	}
 }
 
@@ -100,7 +104,7 @@ bool Application::Update()
 	}
 	for (Object3d* object : models)
 	{
-		object->Update(deltaTime, mainCamera);
+		object->Update(deltaTime, mainCamera, lights);
 	}
 
 	//plane->Update(deltaTime);

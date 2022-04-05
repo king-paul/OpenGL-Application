@@ -7,7 +7,7 @@
 
 using namespace glm;
 
-const float MOVE_SPEED = 3;
+const float MOVE_SPEED = 5;
 const float TURN_SPEED = 0.1f;
 
 class Camera

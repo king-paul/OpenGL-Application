@@ -10,7 +10,7 @@
 class Mesh : public Object3d
 {
 public:
-	Mesh(std::string filename, ShaderProgram* shader, vec3 colour = {0, 0, 0}, vec3 position = {0,0,0});
+	Mesh(std::string filename, ShaderProgram* shader, vec3 colour = {1, 1, 1}, vec3 position = {0,0,0});
 	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture);
 	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture*, Texture*, Texture*);
 
@@ -36,12 +36,12 @@ class SimpleSoulspear : public Mesh
 public:
 	SimpleSoulspear(vec3 position = { 0, 0, 0 }) :
 		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"),
-			position, new Texture("soulspear_diffuse.tga")) {}
+			position, new Texture("soulspear_diffuse.tga")) { }
 };
 
 class Bunny : public Mesh
 {
 public:
-	Bunny(vec3 position = { 0, 0, 0 }) :
-		Mesh("Bunny.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), position) { }
+	Bunny(vec3 position = { 0, 0, 0 }, vec3 colour = {1, 1, 1}) :
+		Mesh("Bunny.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"), position, colour) { }
 };

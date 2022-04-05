@@ -7,10 +7,18 @@ in vec2 uvs;
 in mat3 TBNmatrix;
 in vec3 debugColour;
 
-uniform vec3 fromLight;
-
+// projection
 uniform mat4 modelMatrix;
 
+// lighting
+uniform vec3 fromLight1;
+uniform vec3 fromLight2;
+uniform float light1Multiplier;
+uniform float light2Multiplier;
+uniform vec3 lightColour1;
+uniform vec3 lightColour2;
+
+// textures
 uniform sampler2D diffuseTexture;
 uniform sampler2D normalMap;
 
@@ -21,7 +29,10 @@ void main()
 	vec3 objectSpaceNormals = TBNmatrix * tangeantSpaceNormals;
 	vec3 worldSpaceNormals = normalize((modelMatrix * vec4(objectSpaceNormals, 0.0)).xyz);
 
-	float lightVal = max(dot(worldSpaceNormals, -fromLight), 0.0);
-	FragColour = texture(diffuseTexture, uvs) * lightVal * 3;
-	//FragColour = vec4(objectSpaceNormals * 0.5 + 0.5, 1.0);
+	vec3 lightVal = max(dot(worldSpaceNormals, -fromLight1), 0.0) * lightColour1 *light1Multiplier;
+	lightVal += max(dot(worldSpaceNormals, -fromLight2), 0.0) * lightColour2 * light2Multiplier;
+
+	FragColour = texture(diffuseTexture, uvs) * vec4(lightVal, 1);
+	//FragColour = vec4(objectSpaceNormals * 0.5 + 0.5, 1.0); // debug colours
+	//FragColour = vec4(lightVal, 1);
 }

@@ -5,6 +5,7 @@
 #include <vector>
 #include "Texture.h"
 #include "Camera.h"
+#include "Light.h"
 
 using namespace glm;
 
@@ -54,7 +55,7 @@ public:
 	Object3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = {0, 0, 0});
 	Object3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal = nullptr, Texture* specular = nullptr);
 	~Object3d();
-	virtual void Update(float deltaTime, Camera* camera);
+	virtual void Update(float deltaTime, Camera* camera, std::vector<Light>& lights);
 	virtual void Draw() = 0;
 
 	// getters

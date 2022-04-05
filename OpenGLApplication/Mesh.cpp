@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colour) : Object3d(shader, position)
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colour) : Object3d(shader, position, colour)
 {
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
@@ -25,7 +25,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 		currentVertex.position.y = position.y + meshPointer->mVertices[i].y;
 		currentVertex.position.z = position.z + meshPointer->mVertices[i].z;
 		
-		currentVertex.colour = colour; // colour vertex red		
+		currentVertex.colour = colour;
 
 		// get the normals of the vertices to use for lighting
 		currentVertex.normal.x = meshPointer->mNormals[i].x;

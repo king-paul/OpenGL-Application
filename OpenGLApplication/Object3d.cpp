@@ -26,10 +26,12 @@ Object3d::~Object3d()
 	delete shader;
 }
 
-void Object3d::Update(float deltaTime, Camera* camera)
+void Object3d::Update(float deltaTime, Camera* camera, std::vector<Light>& lights)
 {
 	// mat4 Rotate(mat4 matrix, float angle, vec3 axis);
-	transform = glm::rotate(glm::mat4(1), rotateSpeed * (float)glfwGetTime(), rotateAxis);	
+	if(rotateAxis != vec3(0, 0, 0))
+		transform = glm::rotate(glm::mat4(1), rotateSpeed * (float)glfwGetTime(), rotateAxis);
+
 	view = camera->GetViewMatrix();	
 	projection = camera->GetProjectionMatrix(1920, 1080);
 
@@ -49,7 +51,12 @@ void Object3d::Update(float deltaTime, Camera* camera)
 	}
 
 	// Add lighting to shaders
-	shader->SetUniform("fromLight", -glm::normalize(glm::vec3(1, 0, 1)));
+	shader->SetUniform("fromLight1", -glm::normalize(lights[0].m_direction));
+	shader->SetUniform("fromLight2", -glm::normalize(lights[1].m_direction));
+	shader->SetUniform("light1Multiplier", lights[0].m_intensity);
+	shader->SetUniform("light2Multiplier", lights[1].m_intensity);
+	shader->SetUniform("lightColour1", lights[0].m_colour);
+	shader->SetUniform("lightColour2", lights[1].m_colour);
 }
 
 // Translate, rotate and scale

@@ -5,10 +5,17 @@ out vec4 FragColour;
 in vec3 colour;
 in vec3 worldNormals;
 
-uniform vec3 fromLight;
+uniform vec3 fromLight1;
+uniform vec3 fromLight2;
+uniform vec3 lightColour1;
+uniform float light2Multiplier;
+uniform float light1Multiplier;
+uniform vec3 lightColour2;
 
 void main()
 {
-	float lightVal = max(dot(worldNormals, -fromLight), 0.0);
-	FragColour = vec4(colour * lightVal, 1.0);
+	vec3 lightVal = max(dot(worldNormals, -fromLight1), 0.0) * lightColour1 * light1Multiplier;
+	lightVal += max(dot(worldNormals, -fromLight2), 0.0) * lightColour2 * light2Multiplier;
+	FragColour = vec4(colour, 1.0) * vec4(lightVal, 1.0);
+	//FragColour = vec4(lightColour1, 1.0);
 }
