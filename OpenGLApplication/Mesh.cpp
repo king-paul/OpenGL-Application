@@ -25,7 +25,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 		currentVertex.position.y = position.y + meshPointer->mVertices[i].y;
 		currentVertex.position.z = position.z + meshPointer->mVertices[i].z;
 		
-		currentVertex.colour = { 1, 0, 0 }; // colour vertex red		
+		currentVertex.colour = colour; // colour vertex red		
 
 		// get the normals of the vertices to use for lighting
 		currentVertex.normal.x = meshPointer->mNormals[i].x;
@@ -187,7 +187,7 @@ void Mesh::SetData(unsigned int bufferSize, const void* data)
 
 		if (texNormal)
 		{
-			texDiffuse->Bind(1);
+			texNormal->Bind(1);
 
 			if (texSpecular)
 				texSpecular->Bind(2);

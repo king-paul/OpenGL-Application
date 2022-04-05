@@ -2,7 +2,7 @@
 
 Camera::Camera(GLFWwindow* window, vec3 position) : m_position(position), m_window(window)
 {
-
+	m_theta = -90;
 }
 
 mat4 Camera::GetViewMatrix()
@@ -10,11 +10,14 @@ mat4 Camera::GetViewMatrix()
 	float thetaR = glm::radians(m_theta);
 	float phiR = glm::radians(m_phi);
 	vec3 forward(cos(phiR) * cos(thetaR), sin(phiR), cos(phiR) * sin(thetaR));
+
+	//mat4 LookAt(vec3 cameraPosition, vec3 focalPoint, vec3 upDirection);
 	return glm::lookAt(m_position, m_position + forward, glm::vec3(0, 1, 0));
 }
 
 mat4 Camera::GetProjectionMatrix(float w, float h)
 {
+	// mat4 Perspective(float fovInRadians, float aspectRatio, float nearPlane, float farPlane);
 	return glm::perspective(glm::pi<float>() * 0.25f, w / h, 0.1f, 1000.f);
 }
 

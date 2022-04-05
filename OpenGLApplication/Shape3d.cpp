@@ -79,7 +79,6 @@ void Shape3d::Update(float deltaTime)
 	}
 
 	shader->SetUniform("fromLight", -glm::normalize(glm::vec3(1, -1, 1)));
-
 }
 
 void Shape3d::Draw()

@@ -22,9 +22,6 @@
     <Filter Include="Source Files\Shapes">
       <UniqueIdentifier>{a87764d7-30d0-433c-bde5-b46f6f89dd58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\OBJ">
-      <UniqueIdentifier>{e02cccc7-b31f-4f7e-8168-bc35bf047db8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Bootstrap">
       <UniqueIdentifier>{c4f31a85-c7b4-42f2-bd2f-b65e38485900}</UniqueIdentifier>
     </Filter>
@@ -37,9 +34,6 @@
       <Filter>OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OBJMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShaderProgram.cpp">
@@ -106,12 +100,6 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tiny_obj_loader.h">
-      <Filter>Header Files\OBJ</Filter>
-    </ClInclude>
-    <ClInclude Include="OBJMesh.h">
-      <Filter>Header Files\OBJ</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>

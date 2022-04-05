@@ -46,6 +46,9 @@ protected:
 	// textures
 	Texture *mainTexture, *blendedTexture;
 	Texture *diffuse, *normal, *specular;
+
+	// lighting
+
 };
 
 class Cube : public Shape3d

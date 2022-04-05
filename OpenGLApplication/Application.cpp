@@ -29,7 +29,7 @@ Application::Application()
 		int winWidth, winHeight;
 		glfwGetWindowSize(window, &winWidth, &winHeight);
 
-		mainCamera = new Camera(window, {-10, 0, 0});
+		mainCamera = new Camera(window, {0, 0, 10});
 	}
 }
 

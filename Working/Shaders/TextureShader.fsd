@@ -7,7 +7,8 @@ in vec2 uvs;
 in mat3 TBNmatrix;
 in vec3 debugColour;
 
-uniform vec3 fromLight;
+uniform vec3 fromLight1;
+
 uniform mat4 modelMatrix;
 
 uniform sampler2D diffuseTexture;
@@ -16,10 +17,11 @@ uniform sampler2D normalMap;
 void main()
 {
 	// calculate the world space normals using the tangeant space and object space normals	
-	vec3 tangeantSpaceNormals = texture(normalMap, uvs).xyz;
+	vec3 tangeantSpaceNormals = texture(normalMap, uvs).xyz * 2.0 - 1.0;
 	vec3 objectSpaceNormals = TBNmatrix * tangeantSpaceNormals;
-	vec3 worldSpaceNormals = (modelMatrix * vec4(objectSpaceNormals, 0.0)).xyz;
+	vec3 worldSpaceNormals = normalize((modelMatrix * vec4(objectSpaceNormals, 0.0)).xyz);
 
 	float lightVal = max(dot(worldSpaceNormals, -fromLight), 0.0);
-	FragColour = texture(diffuseTexture, uvs) * lightVal;
+	FragColour = texture(diffuseTexture, uvs) * lightVal * 3;
+	//FragColour = vec4(objectSpaceNormals * 0.5 + 0.5, 1.0);
 }

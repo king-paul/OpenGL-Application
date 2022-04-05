@@ -29,11 +29,9 @@ Object3d::~Object3d()
 void Object3d::Update(float deltaTime, Camera* camera)
 {
 	// mat4 Rotate(mat4 matrix, float angle, vec3 axis);
-	transform = glm::rotate(glm::mat4(1), rotateSpeed * (float)glfwGetTime(), rotateAxis);
-	//mat4 LookAt(vec3 cameraPosition, vec3 focalPoint, vec3 upDirection);
-	view = camera->GetViewMatrix(); //glm::lookAt(glm::vec3(5, 0, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	// mat4 Perspective(float fovInRadians, float aspectRatio, float nearPlane, float farPlane);
-	projection = camera->GetProjectionMatrix(1920, 1080); //glm::perspective(PI / 4, 1920.0f / 1080, 0.1f, 100.0f);
+	transform = glm::rotate(glm::mat4(1), rotateSpeed * (float)glfwGetTime(), rotateAxis);	
+	view = camera->GetViewMatrix();	
+	projection = camera->GetProjectionMatrix(1920, 1080);
 
 	// set projection and view
 	shader->SetUniform("mvpMatrix", projection * view * transform);
@@ -41,16 +39,17 @@ void Object3d::Update(float deltaTime, Camera* camera)
 
 	if (texDiffuse)
 	{
-		shader->SetUniform("diffuse", 0);
+		shader->SetUniform("diffuseTexture", 0);
 
 		if(texNormal)
-			shader->SetUniform("normal", 0);
+			shader->SetUniform("normalMap", 1);
 
 		if(texSpecular)
-			shader->SetUniform("specular", 1);
+			shader->SetUniform("specular", 2);
 	}
 
-	shader->SetUniform("fromLight", -glm::normalize(glm::vec4(1, -1, 1, 0)));
+	// Add lighting to shaders
+	shader->SetUniform("fromLight", -glm::normalize(glm::vec3(1, 0, 1)));
 }
 
 // Translate, rotate and scale
