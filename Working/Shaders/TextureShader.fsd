@@ -19,8 +19,13 @@ uniform vec3 lightColour1;
 uniform vec3 lightColour2;
 
 // textures
-uniform sampler2D diffuseTexture;
+uniform sampler2D diffuseMap;
 uniform sampler2D normalMap;
+uniform sampler2D specularMap;
+
+// specular calculations
+uniform vec3 cameraForward;
+uniform float specularPower;
 
 void main()
 {
@@ -29,10 +34,14 @@ void main()
 	vec3 objectSpaceNormals = TBNmatrix * tangeantSpaceNormals;
 	vec3 worldSpaceNormals = normalize((modelMatrix * vec4(objectSpaceNormals, 0.0)).xyz);
 
+	vec3 specularHighlights1 = texture(specularMap, uvs).xyz * pow(dot(reflect(fromLight1, worldSpaceNormals), cameraForward), specularPower);
+	vec3 specularHighlights2 = texture(specularMap, uvs).xyz * pow(dot(reflect(fromLight2, worldSpaceNormals), cameraForward), specularPower);
+
 	vec3 lightVal = max(dot(worldSpaceNormals, -fromLight1), 0.0) * lightColour1 *light1Multiplier;
 	lightVal += max(dot(worldSpaceNormals, -fromLight2), 0.0) * lightColour2 * light2Multiplier;
 
-	FragColour = texture(diffuseTexture, uvs) * vec4(lightVal, 1);
-	//FragColour = vec4(objectSpaceNormals * 0.5 + 0.5, 1.0); // debug colours
-	//FragColour = vec4(lightVal, 1);
+	FragColour = texture(diffuseMap, uvs) * vec4(lightVal, 1) + vec4(specularHighlights1, 1.0f) + vec4(specularHighlights2, 1.0f);
+
+	// debug fragment colours
+	//FragColour = vec4(specularHighlights, 1);
 }

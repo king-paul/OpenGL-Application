@@ -12,8 +12,8 @@ Object3d::Object3d(ShaderProgram* shader, vec3 position, vec3 colour) :
 
 }
 
-Object3d::Object3d(ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, Texture* specular) :
-	shader(shader), texDiffuse(diffuse), texNormal(normal), texSpecular(specular)
+Object3d::Object3d(ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, Texture* specular, float specularPower) :
+	shader(shader), texDiffuse(diffuse), texNormal(normal), texSpecular(specular), specularPower(specularPower)
 {
 	transform = glm::identity<mat4>();
 	transform[3].x = position.x;
@@ -41,13 +41,17 @@ void Object3d::Update(float deltaTime, Camera* camera, std::vector<Light>& light
 
 	if (texDiffuse)
 	{
-		shader->SetUniform("diffuseTexture", 0);
+		shader->SetUniform("diffuseMap", 0);
 
 		if(texNormal)
 			shader->SetUniform("normalMap", 1);
 
-		if(texSpecular)
-			shader->SetUniform("specular", 2);
+		if (texSpecular)
+		{
+			shader->SetUniform("specularMap", 2);
+			shader->SetUniform("cameraForward", camera->Forward());
+			shader->SetUniform("specularPower", specularPower);
+		}
 	}
 
 	// Add lighting to shaders
@@ -57,6 +61,8 @@ void Object3d::Update(float deltaTime, Camera* camera, std::vector<Light>& light
 	shader->SetUniform("light2Multiplier", lights[1].m_intensity);
 	shader->SetUniform("lightColour1", lights[0].m_colour);
 	shader->SetUniform("lightColour2", lights[1].m_colour);
+
+	//shader->SetUniform("lights", lights);
 }
 
 // Translate, rotate and scale

@@ -20,10 +20,13 @@ public:
 
 	void Update(float deltaTime);
 
+	vec3 Forward() { return m_forward; }
+
 private:
 
 	// camera position and angle
 	vec3 m_position;
+	vec3 m_forward;
 	float m_theta;
 	float m_phi;
 	float m_lastMouseX;

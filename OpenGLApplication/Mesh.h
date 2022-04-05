@@ -12,7 +12,7 @@ class Mesh : public Object3d
 public:
 	Mesh(std::string filename, ShaderProgram* shader, vec3 colour = {1, 1, 1}, vec3 position = {0,0,0});
 	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture);
-	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture*, Texture*, Texture*);
+	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture*, Texture*, Texture*, float specularPower);
 
 	void Draw() override;
 
@@ -28,7 +28,8 @@ class Soulspear : public Mesh
 public:
 	Soulspear(vec3 position = { 0, 0, 0 }) :
 		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"),
-			position, new Texture("soulspear_diffuse.tga"), new Texture("soulspear_normal.tga"), NULL){}
+			position, new Texture("soulspear_diffuse.tga"), new Texture("soulspear_normal.tga"), new Texture("soulspear_specular.tga"), 5) 
+	{}
 };
 
 class SimpleSoulspear : public Mesh

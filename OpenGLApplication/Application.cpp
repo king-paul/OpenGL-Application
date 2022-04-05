@@ -20,14 +20,14 @@ Application::Application()
 		plane = (new Plane({ 0, 0, 0 }, 5, 5));
 
 		models.push_back(new Soulspear(vec3(0, 0, 0)));
-		models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 
-		models.push_back(new Bunny(vec3(-5, -4.5f, -15), {1, 1, 0}));
+		models.push_back(new Bunny(vec3(-5, -4.5f, -15), {0.5, 0.5, 0.5 }));
 		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 
 		// add lights to scene
-		lights.push_back(Light({ 1, 0, 1 }, { 1, 1, 1 }, 2));
-		lights.push_back(Light({1, 0, -1 }, { 1, 0, 0 }, 2));
+		lights.push_back(Light({ 1, 0, 1 }, { 1, 1, 1 }, 6));
+		lights.push_back(Light({1, 0, -1 }, { 1, 0, 0 }, 6));
 
 		// initialize camera		
 		int winWidth, winHeight;

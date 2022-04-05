@@ -97,8 +97,9 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 	SetData(sizeof(Vertex) * vertices.size(), vertices.data());
 }
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, Texture* specular) :
-	Object3d(shader, position, diffuse, normal, specular)
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, 
+	Texture* specular, float specularPower) :
+	Object3d(shader, position, diffuse, normal, specular, specularPower)
 {
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
