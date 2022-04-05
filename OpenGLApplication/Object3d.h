@@ -5,6 +5,7 @@
 #include <vector>
 #include "Texture.h"
 #include "Camera.h"
+#include "Light.h"
 
 using namespace glm;
 
@@ -47,14 +48,16 @@ protected:
 	// colour and textures
 	vec3 colour;
 	Texture *texDiffuse, *texNormal, *texSpecular;
+	float specularPower;
 
 	virtual void SetData(unsigned int bufferSize, const void* data) = 0;
 
 public:
 	Object3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = {0, 0, 0});
-	Object3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal = nullptr, Texture* specular = nullptr);
+	Object3d(ShaderProgram* shader, vec3 position, Texture* diiffuse, Texture* normal = nullptr, Texture* specular = nullptr,
+		    float glossiness = 3);
 	~Object3d();
-	virtual void Update(float deltaTime, Camera* camera);
+	virtual void Update(float deltaTime, Camera* camera, std::vector<Light>& lights);
 	virtual void Draw() = 0;
 
 	// getters

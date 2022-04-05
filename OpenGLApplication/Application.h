@@ -20,11 +20,7 @@
 #include "Shape3d.h"
 #include "Mesh.h"
 #include "Camera.h"
-
-struct Light { 
-	glm::vec3 direction; 
-	glm::vec3 colour;
-};
+#include "Light.h"
 
 class Application
 {
@@ -50,9 +46,7 @@ private:
 	// graphic objects
 	std::vector<Shape2d*> shapes;
 	std::vector<Object3d*> models;
-	Plane* plane;
-
-	ShaderProgram* meshShader;
+	Plane* plane;	
 
 	// cameras
 	Camera* mainCamera;
@@ -62,5 +56,5 @@ private:
 	Texture* faceTexture2;
 
 	// Lights
-	Light light;
+	std::vector<Light> lights;
 };

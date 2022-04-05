@@ -30,7 +30,7 @@ void Camera::Update(float deltaTime)
 	float phiR = glm::radians(m_phi);
 
 	//calculate the forwards and right axes and up axis for the camera
-	glm::vec3 forward(cos(phiR) * cos(thetaR), sin(phiR), cos(phiR) * sin(thetaR));
+	m_forward = vec3(cos(phiR) * cos(thetaR), sin(phiR), cos(phiR) * sin(thetaR));
 	glm::vec3 right(-sin(thetaR), 0, cos(thetaR));
 	glm::vec3 up(0, 1, 0);
 
@@ -38,9 +38,9 @@ void Camera::Update(float deltaTime)
 	
 	// forward, back, left and right
 	if (glfwGetKey(m_window, GLFW_KEY_W) || glfwGetKey(m_window, GLFW_KEY_UP))
-		m_position += forward * MOVE_SPEED * deltaTime;
+		m_position += m_forward * MOVE_SPEED * deltaTime;
 	if (glfwGetKey(m_window, GLFW_KEY_S) || glfwGetKey(m_window, GLFW_KEY_DOWN))
-		m_position -= forward * MOVE_SPEED * deltaTime;
+		m_position -= m_forward * MOVE_SPEED * deltaTime;
 	if (glfwGetKey(m_window, GLFW_KEY_A) || glfwGetKey(m_window, GLFW_KEY_LEFT))
 		m_position -= right * MOVE_SPEED * deltaTime;
 	if (glfwGetKey(m_window, GLFW_KEY_D) || glfwGetKey(m_window, GLFW_KEY_RIGHT))

@@ -7,7 +7,7 @@
 
 using namespace glm;
 
-const float MOVE_SPEED = 3;
+const float MOVE_SPEED = 5;
 const float TURN_SPEED = 0.1f;
 
 class Camera
@@ -20,10 +20,13 @@ public:
 
 	void Update(float deltaTime);
 
+	vec3 Forward() { return m_forward; }
+
 private:
 
 	// camera position and angle
 	vec3 m_position;
+	vec3 m_forward;
 	float m_theta;
 	float m_phi;
 	float m_lastMouseX;
