@@ -3,6 +3,8 @@
 #include "Graphics.h"
 #include "glm.hpp"
 #include <string>
+#include <vector>
+#include "Light.h"
 
 class ShaderProgram
 {
@@ -32,4 +34,5 @@ public:
 	void SetUniform(std::string varName, int value);
 	void SetUniform(std::string varName, glm::mat4 value);
 	void SetUniform(std::string varName, glm::vec3 value);
+	void SetLights(std::string arrayName, std::vector<Light> &lights);
 };

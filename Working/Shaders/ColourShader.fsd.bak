@@ -19,7 +19,7 @@ struct Light
 	float intensity;	
 };
 
-uniform Light lights[10];
+uniform Light lights[2];
 
 void main()
 {
