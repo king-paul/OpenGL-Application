@@ -43,6 +43,10 @@ private:
 
 	GLFWwindow* window;	//The pointer to the GLFW window that gives us a place to draw.
 
+	// shaders
+	ShaderProgram colourShader;
+	ShaderProgram textureShader;
+
 	// graphic objects
 	std::vector<Shape2d*> shapes;
 	std::vector<Object3d*> models;

@@ -10,9 +10,9 @@
 class Mesh : public Object3d
 {
 public:
-	Mesh(std::string filename, ShaderProgram* shader, vec3 colour = {1, 1, 1}, vec3 position = {0,0,0});
-	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture);
-	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture*, Texture*, Texture*, float specularPower);
+	Mesh(std::string filename, ShaderProgram* shader, vec3 colour = {1, 1, 1}, vec3 position = {0,0,0}, unsigned int meshIndex = 0);
+	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture, unsigned int meshIndex = 0);
+	Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture*, Texture*, Texture*, float specularPower, unsigned int meshIndex = 0);
 
 	void Draw() override;
 
@@ -26,59 +26,83 @@ private:
 class Soulspear : public Mesh
 {
 public:
-	Soulspear(vec3 position = { 0, 0, 0 }) :
-		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"),
+	Soulspear(ShaderProgram* shader, vec3 position = { 0, 0, 0 }) :
+		Mesh("soulspear.obj", shader,
 			position, new Texture("soulspear_diffuse.tga"), new Texture("soulspear_normal.tga"), new Texture("soulspear_specular.tga"), 5) 
-	{}
+	{
+
+	}
 };
 
 class SimpleSoulspear : public Mesh
 {
 public:
 	SimpleSoulspear(vec3 position = { 0, 0, 0 }) :
-		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"),
+		Mesh("soulspear.obj", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"), 
 			position, new Texture("soulspear_diffuse.tga")) { }
 };
 
 class Bunny : public Mesh
 {
 public:
-	Bunny(vec3 position = { 0, 0, 0 }, vec3 colour = {1, 1, 1}) :
-		Mesh("Bunny.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"), position, colour) { }
+	Bunny(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = {1, 1, 1}) :
+		Mesh("Bunny.obj", shader, position, colour) { }
 };
 
 class Dragon : public Mesh
 {
 public:
-	Dragon(vec3 position = {0, 0, 0}, vec3 colour = { 1, 1, 1 }) :
-		Mesh("Dragon.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"), position, colour) { }
+	Dragon(ShaderProgram* shader, vec3 position = {0, 0, 0}, vec3 colour = { 1, 1, 1 }) :
+		Mesh("Dragon.obj", shader, position, colour) { }
 };
 
 class Statue : public Mesh
 {
 public:
-	Statue(vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
-		Mesh("Lucy.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"), position, colour) { }
+	Statue(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("Lucy.obj", shader, position, colour) { }
 };
 
 class Demolition : public Mesh
 {
 public:
-	Demolition(vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
-		Mesh("demolition.fbx", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"), position,
-			new Texture("EnemyElite1_D.tga"))
+	Demolition(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("demolition.fbx", shader, position,
+			new Texture("demolition_d.tga"), new Texture("demolition_n.tga"), new Texture("demolition_s.tga"), 1, 1)
 	{ 
-		SetScale(0.001, 0.001, 0.001);
+		SetScale(0.01, 0.01, 0.01);
 	}
 };
+
 
 class EnemyElite : public Mesh
 {
 public:
-	EnemyElite(vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
-		Mesh("demolition.fbx", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"), position,
-			new Texture("EnemyElite1_D.tga"))
+	EnemyElite(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("EnemyElite.fbx", shader, position,
+			new Texture("EnemyElite1_D.tga"), new Texture("EnemyElite_N.tga"), new Texture("EnemyElite_S.tga"), 1, 1)
 	{
-		
+		SetScale(0.01, 0.01, 0.01);
+	}
+};
+
+class EnemyEliteGun : public Mesh
+{
+public:
+	EnemyEliteGun(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("EnemyElite.fbx", new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), position,
+			new Texture("EnemyElite1_D.tga"), new Texture("EnemyElite_N.tga"), new Texture("EnemyElite_S.tga"), 1, 2)
+	{
+		SetScale(0.01, 0.01, 0.01);
+	}
+};
+
+class Mannequin : public Mesh
+{
+public:
+	Mannequin(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("mannequin.fbx", shader, position, colour) 
+	{ 
+		SetScale(0.1, 0.1, 0.1);
 	}
 };

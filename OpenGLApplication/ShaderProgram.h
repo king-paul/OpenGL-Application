@@ -36,3 +36,41 @@ public:
 	void SetUniform(std::string varName, glm::vec3 value);
 	void SetLights(std::string arrayName, std::vector<Light> &lights);
 };
+
+class ColourShader
+{
+	static ShaderProgram* shader;
+
+public:
+	static ShaderProgram* GetInstance()
+	{
+		if(shader == nullptr)
+			shader = new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
+
+		return shader;
+	}
+
+	static void Unload()
+	{
+		delete shader;
+	}
+};
+
+class TextureShader
+{
+	static ShaderProgram* shader;
+
+public:
+	static ShaderProgram* GetInstance()
+	{
+		if (shader == nullptr)
+			shader = new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd");
+
+		return shader;
+	}
+
+	static void Unload()
+	{
+		delete shader;
+	}
+};

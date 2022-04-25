@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colour) : Object3d(shader, position, colour)
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colour, unsigned int meshIndex) : Object3d(shader, position, colour)
 {
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
@@ -14,7 +14,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 		aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace);
 
 	//assume there's only one mesh and create a pointer to it
-	aiMesh* meshPointer = *scene->mMeshes;
+	aiMesh* meshPointer = scene->mMeshes[meshIndex];
 
 	// iterate through all of the vertices in the imported mesh
 	for (unsigned int i = 0; i < meshPointer->mNumVertices; i++)
@@ -50,7 +50,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 	SetData(sizeof(Vertex) * vertices.size(), vertices.data());
 }
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture) : Object3d(shader, position, texture)
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* texture, unsigned int meshIndex) : Object3d(shader, position, texture)
 {	
 	// allocates new space and creates ids
 	glGenBuffers(1, &vertexBufferID);
@@ -63,7 +63,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 	const aiScene* scene = importer.ReadFile("Meshes/"+filename, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices);
 	
 	//assume there's only one mesh and create a pointer to it
-	aiMesh* meshPointer = *scene->mMeshes;
+	aiMesh* meshPointer = scene->mMeshes[meshIndex];
 
 	// iterate through all of the vertices in the imported mesh
 	for (unsigned int i = 0; i < meshPointer->mNumVertices; i++)
@@ -106,8 +106,8 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 	SetData(sizeof(Vertex) * vertices.size(), vertices.data());
 }
 
-Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, 
-	Texture* specular, float specularPower) :
+Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal,
+	Texture* specular, float specularPower, unsigned int meshIndex) :
 	Object3d(shader, position, diffuse, normal, specular, specularPower)
 {
 	// allocates new space and creates ids
@@ -122,7 +122,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 		aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace);
 
 	//assume there's only one mesh and create a pointer to it
-	aiMesh* meshPointer = *scene->mMeshes;
+	aiMesh* meshPointer = scene->mMeshes[meshIndex];
 
 	// iterate through all of the vertices in the imported mesh
 	for (unsigned int i = 0; i < meshPointer->mNumVertices; i++)
