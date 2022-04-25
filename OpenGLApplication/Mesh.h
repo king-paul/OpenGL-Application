@@ -68,7 +68,7 @@ public:
 		Mesh("demolition.fbx", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"), position,
 			new Texture("EnemyElite1_D.tga"))
 	{ 
-		//SetScale(0.1, 0.1, 0.1);
+		SetScale(0.001, 0.001, 0.001);
 	}
 };
 

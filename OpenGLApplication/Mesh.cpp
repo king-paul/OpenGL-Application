@@ -86,6 +86,10 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 			currentVertex.normal.y = meshPointer->mNormals[i].y;
 			currentVertex.normal.z = meshPointer->mNormals[i].z;
 		}
+		else
+		{
+			currentVertex.normal = { 0, 0, 0 };
+		}
 
 		vertices.push_back(currentVertex); // add to vertex vector
 	}

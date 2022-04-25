@@ -1,16 +1,16 @@
 #include "Shape3d.h"
 
 Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* main, Texture* blend) :
-	shader(shader), position(position), mainTexture(main), blendedTexture(blend)
-	//Object3d(shader, position, main, blend)
+	shader(shader), position(position), mainTexture(main), blendedTexture(blend),
+	Object3d(shader, position, main, blend)
 {
 	rotateAxis = vec3(0, 1, 0);
 	transform = glm::identity<mat4>();
 }
 
 Shape3d::Shape3d(ShaderProgram* shader, vec3 position, Texture* diffuse, Texture* normal, Texture* specular):
-	shader(shader), position(position), diffuse(diffuse), normal(normal), specular(specular)
-	//Object3d(shader, position, diffuse, normal, specular)
+	shader(shader), position(position), diffuse(diffuse), normal(normal), specular(specular),
+	Object3d(shader, position, diffuse, normal, specular)
 {
 	rotateAxis = vec3(0, 1, 0);
 	transform = glm::identity<mat4>();
