@@ -54,15 +54,7 @@ void Object3d::Update(float deltaTime, Camera* camera, std::vector<Light>& light
 		}
 	}
 
-	// Add lighting to shaders
-	shader->SetUniform("fromLight1", -glm::normalize(lights[0].m_direction));
-	shader->SetUniform("fromLight2", -glm::normalize(lights[1].m_direction));
-	shader->SetUniform("light1Multiplier", lights[0].m_intensity);
-	shader->SetUniform("light2Multiplier", lights[1].m_intensity);
-	shader->SetUniform("lightColour1", lights[0].m_colour);
-	shader->SetUniform("lightColour2", lights[1].m_colour);
-
-	//shader->SetUniform("lights", lights);
+	shader->SetLights("lights", lights);
 }
 
 // Translate, rotate and scale
