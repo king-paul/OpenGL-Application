@@ -7,9 +7,6 @@
 
 using namespace glm;
 
-const float MOVE_SPEED = 5;
-const float TURN_SPEED = 0.1f;
-
 class Camera
 {
 public:
@@ -22,6 +19,12 @@ public:
 
 	vec3 Forward() { return m_forward; }
 
+	//constants
+	const float MOVE_SPEED = 5;
+	const float TURN_SPEED = 0.1f;
+	const float MOUSE_PAN_SPEED = 1;
+
+	const float MOUSE_WHEEL_SCALE = 0.1f;
 private:
 
 	// camera position and angle
@@ -33,4 +36,6 @@ private:
 	float m_lastMouseY;
 
 	GLFWwindow* m_window;
+
+	GLFWscrollfun ScrollCallback(GLFWwindow* window, double x, double y);
 };

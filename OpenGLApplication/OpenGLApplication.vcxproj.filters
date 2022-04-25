@@ -22,9 +22,6 @@
     <Filter Include="Source Files\Shapes">
       <UniqueIdentifier>{a87764d7-30d0-433c-bde5-b46f6f89dd58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Bootstrap">
-      <UniqueIdentifier>{c4f31a85-c7b4-42f2-bd2f-b65e38485900}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\Textures">
       <UniqueIdentifier>{bf1ccb68-093a-4c39-8d6e-617f02fbcde3}</UniqueIdentifier>
     </Filter>
@@ -62,9 +59,6 @@
     </ClCompile>
     <ClCompile Include="Plane.cpp">
       <Filter>Source Files\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\Bootstrap</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files</Filter>
