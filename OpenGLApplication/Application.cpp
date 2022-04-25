@@ -8,7 +8,7 @@ Application::Application()
 		faceTexture1 = new Texture("face.png");
 		faceTexture2 = new Texture("face_sad.png");
 
-		std::vector<vec3> colours = { {1, 0, 0} , { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, {1, 0, 1} };
+		std::vector<vec3> colours = { { 1, 0, 0 }, { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, { 1, 0, 1 } };
 
 		//models.push_back(new Cube(colours));
 		//models.push_back(new Cube(vec3(0, 0, 0), colours));
@@ -25,6 +25,12 @@ Application::Application()
 		models.push_back(new Bunny(vec3(-5, -4.5f, -15), {0.5, 0.5, 0.5 }));
 		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 
+		models.push_back(new Dragon({5, 0, -15}, {0, 1, 0}));
+		models.push_back(new Statue({ 10, 0, 5 }));
+
+		//models.push_back(new Demolition({ 0, 0, -10 }));
+		//models.push_back(new EnemyElite({ 0, 0, -10 }));
+		
 		// add lights to scene
 		lights.push_back(Light({ 1, 0, 1 }, { 1, 1, 1 }, 6));
 		lights.push_back(Light({1, 0, -1 }, { 1, 0, 0 }, 6));
@@ -131,7 +137,7 @@ void Application::Draw()
 		object->Draw();
 	}
 
-	//plane->Draw();
+	plane->Draw();
 
 }
 

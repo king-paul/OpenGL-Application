@@ -54,11 +54,23 @@ void Camera::Update(float deltaTime)
 
 	if (glfwGetKey(m_window, GLFW_KEY_P))
 		std::cout << "Camera Position (" << m_position.x << ", " << m_position.y << ", " 
-										 << m_position.z << ")" << std::endl;
+										 << m_position.z << ")" << std::endl;	
 
 	// get the current mouse coordinates
 	double mouseX, mouseY;
 	glfwGetCursorPos(m_window, &mouseX, &mouseY);
+
+	// pan with left mouse button
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT))
+	{
+		m_position += vec3(m_lastMouseX - mouseX, mouseY - m_lastMouseY, 0) * MOUSE_PAN_SPEED * deltaTime;
+	}
+
+	//forward and back when the middle mouse button is down
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_MIDDLE))
+	{
+		m_position.z += (mouseY - m_lastMouseY) * deltaTime;
+	}
 	
 	// if the right button is down, increment theta and phi
 	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_RIGHT))
@@ -69,7 +81,16 @@ void Camera::Update(float deltaTime)
 		m_phi -= TURN_SPEED * (mouseY - m_lastMouseY);
 	}
 
+	//glfwSetScrollCallback(m_window, ScrollCallback(m_window, 0, 1));
+
 	// store this frames values for next frame
 	m_lastMouseX = mouseX;
 	m_lastMouseY = mouseY;
+}
+
+
+GLFWscrollfun Camera::ScrollCallback(GLFWwindow* window, double x, double y)
+{
+	m_position.z += MOUSE_WHEEL_SCALE * (float)y;
+	return NULL;
 }

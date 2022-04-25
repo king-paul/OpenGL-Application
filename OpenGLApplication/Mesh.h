@@ -46,3 +46,39 @@ public:
 	Bunny(vec3 position = { 0, 0, 0 }, vec3 colour = {1, 1, 1}) :
 		Mesh("Bunny.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"), position, colour) { }
 };
+
+class Dragon : public Mesh
+{
+public:
+	Dragon(vec3 position = {0, 0, 0}, vec3 colour = { 1, 1, 1 }) :
+		Mesh("Dragon.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"), position, colour) { }
+};
+
+class Statue : public Mesh
+{
+public:
+	Statue(vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("Lucy.obj", new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"), position, colour) { }
+};
+
+class Demolition : public Mesh
+{
+public:
+	Demolition(vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("demolition.fbx", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"), position,
+			new Texture("EnemyElite1_D.tga"))
+	{ 
+		SetScale(0.001, 0.001, 0.001);
+	}
+};
+
+class EnemyElite : public Mesh
+{
+public:
+	EnemyElite(vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("demolition.fbx", new ShaderProgram("3dVertexShader.vsd", "BasicTextureShader.fsd"), position,
+			new Texture("EnemyElite1_D.tga"))
+	{
+		
+	}
+};

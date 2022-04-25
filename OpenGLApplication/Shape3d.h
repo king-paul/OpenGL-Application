@@ -12,7 +12,7 @@
 
 using namespace glm;
 
-class Shape3d// : public Object3d
+class Shape3d : public Object3d
 {
 public:	
 	Shape3d(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, Texture* mainTexture = nullptr, Texture* blendedTexture = nullptr);

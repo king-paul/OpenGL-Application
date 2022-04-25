@@ -10,7 +10,7 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 
 	Assimp::Importer importer;
 	// filename, flags for process that are happening
-	const aiScene* scene = importer.ReadFile("Meshes/" + filename, 
+	const aiScene* scene = importer.ReadFile("Meshes/" + filename,
 		aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace);
 
 	//assume there's only one mesh and create a pointer to it
@@ -28,9 +28,12 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 		currentVertex.colour = colour;
 
 		// get the normals of the vertices to use for lighting
-		currentVertex.normal.x = meshPointer->mNormals[i].x;
-		currentVertex.normal.y = meshPointer->mNormals[i].y;
-		currentVertex.normal.z = meshPointer->mNormals[i].z;
+		if (meshPointer->mNormals)
+		{			
+			currentVertex.normal.x = meshPointer->mNormals[i].x;
+			currentVertex.normal.y = meshPointer->mNormals[i].y;
+			currentVertex.normal.z = meshPointer->mNormals[i].z;
+		}
 
 		vertices.push_back(currentVertex); // add to vertex vector
 	}
@@ -78,9 +81,15 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, Texture* 
 		}
 
 		// get the normals of the vertices to use for lighting
-		currentVertex.normal.x = meshPointer->mNormals[i].x;
-		currentVertex.normal.y = meshPointer->mNormals[i].y;
-		currentVertex.normal.z = meshPointer->mNormals[i].z;
+		if (meshPointer->mNormals) {
+			currentVertex.normal.x = meshPointer->mNormals[i].x;
+			currentVertex.normal.y = meshPointer->mNormals[i].y;
+			currentVertex.normal.z = meshPointer->mNormals[i].z;
+		}
+		else
+		{
+			currentVertex.normal = { 0, 0, 0 };
+		}
 
 		vertices.push_back(currentVertex); // add to vertex vector
 	}
