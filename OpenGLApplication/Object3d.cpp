@@ -23,7 +23,16 @@ Object3d::Object3d(ShaderProgram* shader, vec3 position, Texture* diffuse, Textu
 
 Object3d::~Object3d()
 {
-	delete shader;
+	//delete shader;
+
+	if (texDiffuse)
+		delete texDiffuse;
+
+	if (texNormal)
+		delete texNormal;
+
+	if (texSpecular)
+		delete texSpecular;
 }
 
 void Object3d::Update(float deltaTime, Camera* camera, std::vector<Light>& lights)
@@ -60,17 +69,17 @@ void Object3d::Update(float deltaTime, Camera* camera, std::vector<Light>& light
 // Translate, rotate and scale
 void Object3d::SetPosition(float x, float y, float z)
 {
-	glm::translate(transform, vec3(x, y, z));
+	transform = glm::translate(transform, vec3(x, y, z));
 }
 
 void Object3d::SetRotation(vec3 axis, float angle)
 {
-	glm::rotate(transform, angle, axis);
+	transform = glm::rotate(transform, angle, axis);
 }
 
 void Object3d::SetScale(float x, float y, float z)
 {
-	glm::scale(transform, vec3(x, y, z));
+	transform = glm::scale(transform, vec3(x, y, z));
 }
 
 void Object3d::SetRotateMotion(vec3 axis, float speed)
