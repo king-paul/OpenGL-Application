@@ -69,6 +69,9 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="khrplatform.h">
@@ -140,6 +143,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\Working\Shaders\TriangleShader.vsd">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Working\Shaders\BasicTextureShader.fsd">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -5,3 +5,5 @@
 #include "glad.h"
 
 #define PI 3.14159f
+
+void CheckOpenGLError();

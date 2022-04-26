@@ -68,8 +68,30 @@ class Demolition : public Mesh
 public:
 	Demolition(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
 		Mesh("demolition.fbx", shader, position,
-			new Texture("demolition_d.tga"), new Texture("demolition_n.tga"), new Texture("demolition_s.tga"), 1, 1)
+			new Texture("demolition_d.tga"), new Texture("demolition_n.tga"), new Texture("demolition_s.tga"), 1, 0)
 	{ 
+		SetScale(0.01, 0.01, 0.01);
+	}
+};
+
+class DemolitionSuit1 : public Mesh
+{
+public:
+	DemolitionSuit1(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("demolition.fbx", shader, position,
+			new Texture("demolition_d.tga"), new Texture("demolition_n.tga"), new Texture("demolition_s.tga"), 1, 1)
+	{
+		SetScale(0.01, 0.01, 0.01);
+	}
+};
+
+class DemolitionSuit2 : public Mesh
+{
+public:
+	DemolitionSuit2(ShaderProgram* shader, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("demolition.fbx", shader, position,
+			new Texture("demolition_d.tga"), new Texture("demolition_n.tga"), new Texture("demolition_s.tga"), 1, 2)
+	{
 		SetScale(0.01, 0.01, 0.01);
 	}
 };

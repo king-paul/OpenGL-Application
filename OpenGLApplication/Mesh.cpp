@@ -208,6 +208,16 @@ void Mesh::SetData(unsigned int bufferSize, const void* data)
 
 void Mesh::Draw()
 {	
+	
+
+	// enable additional verticies for drawing a mesh
+	/*glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
+	glEnableVertexAttribArray(4);
+	glEnableVertexAttribArray(5);*/
+
 	// bind vertex buffer
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 
@@ -223,8 +233,24 @@ void Mesh::Draw()
 
 	shader->UseShader();
 
+	
+
 	// bind indices and then draw them
+	CheckOpenGLError();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
-	glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_SHORT, 0); // draws the mesh on the screen
+	CheckOpenGLError();
+	auto indexCount = (GLsizei)indices.size();
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, 0); // draws the mesh on the screen
+	CheckOpenGLError();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	CheckOpenGLError();
+
+
+	/*glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
+	glDisableVertexAttribArray(4);
+	glDisableVertexAttribArray(5);*/
 }

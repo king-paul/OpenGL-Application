@@ -59,6 +59,11 @@ private:
 	Texture* faceTexture1;
 	Texture* faceTexture2;
 
+	Mesh* demolitionMan[2];
+	Mesh* enemyElite[2];
+
 	// Lights
 	std::vector<Light> lights;
+
+	float frameNum = 1;
 };

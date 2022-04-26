@@ -20,8 +20,11 @@ Application::Application()
 
 		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 
-		//models.push_back(new Plane({0, 0, 0}, 5, 5));
-		//plane = (new Plane({ 0, 0, 0 }, 5, 5));
+		models.push_back(new Plane({ 0, 0, 0 }, 5, 5));
+			//new Texture("four_diffuse.tga"), new Texture("four_normal.tga"), new Texture("four_specular.tga")));
+
+		//plane = (new Plane({0, 0, 0}, 5, 5));
+		//models.push_back(plane);
 
 		models.push_back(new Soulspear(&textureShader, vec3(0, 0, 0)));
 		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
@@ -33,6 +36,11 @@ Application::Application()
 		models.push_back(new Statue(&colourShader, { 10, 0, 5 }));
 
 		//models.push_back(new Demolition(&textureShader, { -10, -5, -10 }));
+
+		//demolitionMan[0] = new DemolitionSuit1(&textureShader, { -10, -5, -10 });
+		//demolitionMan[1] = new DemolitionSuit2(&textureShader, { -10, -5, -10 });
+		//models.push_back(demolitionMan[0]);
+		//models.push_back(demolitionMan[1]);
 		//models.push_back(new EnemyElite(&textureShader, { 0, 0, -10 }));
 		//models.push_back(new EnemyEliteGun(&textureShader, { 5, 0, -10 }));
 
@@ -133,19 +141,24 @@ bool Application::Update()
 void Application::Draw()
 {
 	glClearColor(0.25f, 0.25f, 0.25f, 1);	
-
-	// draw shapes
+	
+	std::cout << "Drawing Frame: " << frameNum << std::endl;
+	//models[0]->Draw();
+	
+	// draw shapes	
+	
 	for (Shape2d* shape : shapes)
 	{
 		shape->Draw();
 	}
 	for (Object3d* object : models)
 	{
+		//CheckOpenGLError();
 		object->Draw();
 	}
 
 	//plane->Draw();
-
+	frameNum++;
 }
 
 void Application::Create2dShapes()

@@ -60,11 +60,15 @@ public:
 };
 
 
-class Plane : public Shape3d
+class Plane : public Object3d
 {
 public:
 	Plane(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1,vec3 colour = {1, 1, 1});
-	Plane(Texture* texture, vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1);
+	Plane(vec3 position, float scaleX, float scaleY, Texture* texture, Texture* normal = nullptr, Texture* specular = nullptr);
+
+	void Update(float deltaTime);
+	void Draw() override;
+	void SetData(unsigned int bufferSize, const void* data) override;
 
 private:
 	vec3 normal;
