@@ -1,6 +1,7 @@
 #include "ShaderProgram.h"
 #include "Utilities.h"
 #include <iostream>
+#include <sstream>
 
 ShaderProgram::ShaderProgram(std::string vertexFilename)
 {
@@ -174,18 +175,19 @@ void ShaderProgram::SetLights(std::string arrayName, std::vector<Light>& lights)
 
 	for (int i=0; i< lights.size(); i++)
 	{
+		
 		setValue = arrayName + "[";
-		setValue += i + "].direction";
+		setValue += std::to_string(i) + "].direction";
 		varLoc = glGetUniformLocation(shaderProgram, setValue.c_str());
 		glUniform3f(varLoc, lights[i].m_direction.x, lights[i].m_direction.y, lights[i].m_direction.z);
 
 		setValue = arrayName + "[";
-		setValue += i + "].colour";
+		setValue += std::to_string(i) + "].colour";
 		varLoc = glGetUniformLocation(shaderProgram, setValue.c_str());
 		glUniform3f(varLoc, lights[i].m_colour.r, lights[i].m_colour.g, lights[i].m_colour.b);
 
 		setValue = arrayName + "[";
-		setValue += i + "].intensity";
+		setValue += std::to_string(i) + "].intensity";
 		varLoc = glGetUniformLocation(shaderProgram, setValue.c_str());
 		glUniform1f(varLoc, lights[i].m_intensity);
 	}
