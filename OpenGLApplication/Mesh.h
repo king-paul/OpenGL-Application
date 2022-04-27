@@ -133,3 +133,32 @@ public:
 	}
 
 };
+
+class Sphere : public Mesh
+{
+public:
+	Sphere(ShaderProgram* shader, vec3 scale = { 1, 1, 1 }, vec3 position = { 0, 0, 0 }, vec3 colour = { 1, 1, 1 }) :
+		Mesh("Sphere.obj", shader, position, colour)
+	{
+		SetScale(scale.x, scale.y, scale.z);
+	}
+
+	Sphere(ShaderProgram* shader, Texture* diffuse, Texture* normal, Texture* specular, float specularPower = 1,
+		vec3 scale = { 1, 1, 1 }, vec3 position = { 0, 0, 0 }) : 
+		Mesh("Sphere.obj", shader, position, diffuse, normal, specular, specularPower)
+	{
+		SetScale(scale.x, scale.y, scale.z);
+	}
+};
+
+class Globe : public Sphere
+{
+public:
+	Globe(ShaderProgram* shader, vec3 scale = { 1, 1, 1 }, vec3 position = { 0, 0, 0 }) : 
+		Sphere(shader, 
+			new Texture("earth_textures/earth_diffuse.jpg"), 
+			new Texture("earth_textures/earth_normal.jpg"), 
+			new Texture("earth_textures/earth_specular.jpg"), 
+			3, scale, position)
+	{}
+};

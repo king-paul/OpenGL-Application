@@ -142,6 +142,9 @@
     <None Include="..\Working\Shaders\TriangleShader.vsd">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Working\Shaders\BasicTextureShader.fsd">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Working\face.png">

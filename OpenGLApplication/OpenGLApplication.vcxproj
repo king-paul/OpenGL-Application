@@ -184,6 +184,7 @@
   <ItemGroup>
     <None Include="..\Working\Shaders\3dVertexShader.vsd" />
     <None Include="..\Working\Shaders\AmbientDiffuse.fsd" />
+    <None Include="..\Working\Shaders\BasicTextureShader.fsd" />
     <None Include="..\Working\Shaders\CameraShader.vsd" />
     <None Include="..\Working\Shaders\ColourShader.fsd" />
     <None Include="..\Working\Shaders\Phong.fsd" />

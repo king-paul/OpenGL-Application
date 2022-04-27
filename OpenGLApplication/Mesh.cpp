@@ -229,6 +229,31 @@ void Mesh::Draw()
 
 	shader->UseShader();
 
+	// set projection and view
+	shader->SetUniform("mvpMatrix", projection * view * transform);
+	shader->SetUniform("modelMatrix", transform);
+
+	if (texDiffuse)
+	{
+		shader->SetUniform("diffuseMap", 0);
+		texDiffuse->Bind(0);
+
+		if (texNormal)
+		{
+			shader->SetUniform("normalMap", 1);
+			texNormal->Bind(1);
+
+			if (texSpecular)
+			{
+				shader->SetUniform("specularMap", 2);				
+				shader->SetUniform("specularPower", specularPower);
+				texSpecular->Bind(2);
+			}
+			
+		}
+
+	}	
+
 	// bind indices and then draw them
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
 	glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_SHORT, 0); // draws the mesh on the screen
