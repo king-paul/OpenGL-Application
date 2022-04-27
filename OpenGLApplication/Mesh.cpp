@@ -13,6 +13,12 @@ Mesh::Mesh(std::string filename, ShaderProgram* shader, vec3 position, vec3 colo
 	const aiScene* scene = importer.ReadFile("Meshes/" + filename,
 		aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace);
 
+	if (scene == nullptr)
+	{
+		std::cout << "Error: Cannont open file: " << filename << std::endl;
+		return;
+	}
+
 	//assume there's only one mesh and create a pointer to it
 	aiMesh* meshPointer = scene->mMeshes[meshIndex];
 

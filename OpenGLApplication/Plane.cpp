@@ -1,6 +1,6 @@
 #include "Shape3d.h"
 
-Plane::Plane(vec3 position, float scaleX , float scaleY, vec3 colour) 
+PlaneOld::PlaneOld(vec3 position, float scaleX , float scaleY, vec3 colour)
 	: Shape3d(new ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd"))
 {
 	vec3 vertices[] = {	
@@ -22,7 +22,7 @@ Plane::Plane(vec3 position, float scaleX , float scaleY, vec3 colour)
 	SetData(sizeof(Polygon) * polygons.size(), (void*)polygons.data());
 }
 
-Plane::Plane(Texture* texture, vec3 position, float scaleX, float scaleY)
+PlaneOld::PlaneOld(Texture* texture, vec3 position, float scaleX, float scaleY)
 	: Shape3d(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), position, texture)
 {	
 	vec3 vertices[] = {	// first triangle

@@ -60,11 +60,11 @@ public:
 };
 
 
-class Plane : public Shape3d
+class PlaneOld : public Shape3d
 {
 public:
-	Plane(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1,vec3 colour = {1, 1, 1});
-	Plane(Texture* texture, vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1);
+	PlaneOld(vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1,vec3 colour = {1, 1, 1});
+	PlaneOld(Texture* texture, vec3 position = { 0, 0, 0 }, float scaleX = 1, float scaleY = 1);
 
 private:
 	vec3 normal;
