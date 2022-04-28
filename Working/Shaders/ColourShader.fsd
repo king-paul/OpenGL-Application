@@ -5,12 +5,6 @@ out vec4 FragColour;
 in vec3 colour;
 in vec3 worldNormals;
 
-//uniform vec3 fromLight1;
-//uniform vec3 fromLight2;
-//uniform vec3 lightColour1;
-//uniform float light2Multiplier;
-//uniform float light1Multiplier;
-//uniform vec3 lightColour2;
 
 struct Light
 {
@@ -19,19 +13,19 @@ struct Light
 	float intensity;	
 };
 
+//lights
 uniform Light lights[10];
+uniform int totalLights;
 
 void main()
 {
 	vec3 lightVal = {0, 0, 0};
 
-	for(int i=0; i < 2; i++)
+	for(int i=0; i < totalLights; i++)
 	{
 		lightVal += max(dot(worldNormals, -lights[i].direction), 0.0) * lights[i].colour * lights[i].intensity;
 	}
 	
-	//vec3 lightVal = max(dot(worldNormals, -fromLight1), 0.0) * lightColour1 * light1Multiplier;
-	//lightVal += max(dot(worldNormals, -fromLight2), 0.0) * lightColour2 * light2Multiplier;
 	FragColour = vec4(colour, 1.0) * vec4(lightVal, 1.0);
 	//FragColour = vec4(lightColour1, 1.0);
 }

@@ -11,6 +11,7 @@ Application::Application()
 		// set up shader programs
 		colourShader = ShaderProgram("3dVertexShader.vsd", "ColourShader.fsd");
 		textureShader = ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd");
+		multiLightTextureShader = ShaderProgram("3dVertexShader.vsd", "MultiLightTextureShader.fsd");
 		ShaderProgram simpleTextureShader("3dVertexShader.vsd", "BasicTextureShader.fsd");
 
 		std::vector<vec3> colours = { { 1, 0, 0 }, { 0, 0, 1 }, { 0, 1, 0 }, { 0, 1, 1 }, { 1, 1, 0 }, { 1, 0, 1 } };
@@ -30,27 +31,35 @@ Application::Application()
 		//models.push_back(new Plane(&colourShader, {10, 1, 10}, {0, 0, 0}));
 		//models[0]->SetRotation(vec3(1, 0, 1), 45);
 
-		models.push_back(new Soulspear(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), vec3(0, 0, 0)));
+		models.push_back(new Soulspear(&textureShader, vec3(0, 0, 0)));
 		models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
 
-		//models.push_back(new Bunny(&colourShader, vec3(-5, -4.5f, -15), {0.5, 0.5, 0.5 }));
-		//models[0]->SetRotateMotion(vec3(0, 1, 0), 1);
+		models.push_back(new Bunny(&colourShader, vec3(-5, 0, -5), {0.5, 0.5, 0.5}));
 
-		//models.push_back(new Dragon(&colourShader, {5, 0, -15}, {0, 1, 0}));
-		//models.push_back(new Statue(&colourShader, { 10, 0, 5 }));
+		models.push_back(new Dragon(&colourShader, {5, 0, -5}, {0.5, 0.5, 0.5}));
+		models.push_back(new Statue(&colourShader, { 10, 0, 5 }, {0.5, 0.5, 0.5}));
 
-		//models.push_back(new Demolition(&textureShader, { -10, -5, -10 }));
-		//models.push_back(new EnemyElite(&textureShader, { 0, 0, -10 }));
-		//models.push_back(new EnemyEliteGun(&textureShader, { 5, 0, -10 }));
-
-		//models.push_back(new Mannequin({ 0, -5, -10 }));	
-
-		models.push_back(new Globe(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), {5, 5, 5}, {0, 0, -10}));
-		models[1]->SetRotateMotion({ 0, 1, 0 }, 1);
+		// place fbx models and rotate them
+		models.push_back(new Demolition(&textureShader, { -10, -5, 20 }));
+		models.back()->SetRotation({ 0, 1, 0 }, PI);
+		models.push_back(new EnemyElite(&textureShader, { 0, 0, 20 }));
+		models.back()->SetRotation({ 0, 1, 0 }, PI);
+		models.push_back(new EnemyEliteGun(&textureShader, { 5, 0, 20 }));
+		models.back()->SetRotation({ 0, 1, 0 }, PI);		
+		
+		// load earth globe and have it orbit
+		models.push_back(new Globe(new ShaderProgram("3dVertexShader.vsd", "TextureShader.fsd"), { 20, 20, 20 }, { 0, 0, -10 }));
+		models.back()->SetRotateMotion({ 0, 1, 0 }, 1);
 		
 		// add lights to scene
-		lights.push_back(Light(glm::normalize(vec3( 0, 0, 1 )), {1, 1, 1}, 1));
-		//lights.push_back(Light(glm::normalize(vec3(1, 0, -1 )), { 1, 0, 0 }, 6));
+		// main white lights
+		lights.push_back(Light(glm::normalize(vec3(1, 0, -1)), { 1, 1, 1}, 1)); 
+		//lights.push_back(Light(glm::normalize(vec3(1, 0, 1)), { 1, 1, 1}, 5));
+
+		lights.push_back(Light(glm::normalize(vec3(1, 0, -1)), { 1, 0, 0 }, 2)); // red
+		lights.push_back(Light(glm::normalize(vec3(-1, 0, -1)), { 0, 1, 0 }, 2)); // green
+		lights.push_back(Light(glm::normalize(vec3(1, 0, 1)), { 0, 0, 1 }, 2)); // blue
+		lights.push_back(Light(glm::normalize(vec3(-1, 0, 1)), { 1, 1, 0 }, 2)); // yellow
 
 		// initialize camera		
 		int winWidth, winHeight;

@@ -63,6 +63,7 @@ void Object3d::Update(float deltaTime, Camera* camera, std::vector<Light>& light
 		}
 	}
 
+	shader->SetUniform("totalLights", (int) lights.size());
 	shader->SetLights("lights", lights);
 }
 

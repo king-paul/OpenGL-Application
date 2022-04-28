@@ -46,6 +46,7 @@ private:
 	// shaders
 	ShaderProgram colourShader;
 	ShaderProgram textureShader;
+	ShaderProgram multiLightTextureShader;
 
 	// graphic objects
 	std::vector<Shape2d*> shapes;
